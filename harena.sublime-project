@@ -1,0 +1,13 @@
+{
+  "folders":
+  [
+    {
+      "path": "/Users/Tiago/Workspace/harena",
+      "folder_exclude_patterns": [
+        "tmp"
+      ],
+      "file_exclude_patterns": [
+      ]
+    }
+  ]
+}
