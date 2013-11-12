@@ -53,4 +53,9 @@ Harena::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  devise_for :members
+
+  root :to => "home#index"
+
 end
