@@ -1,12 +1,12 @@
-<% if member_signed_in? %>
+<% if player_signed_in? %>
 
 <h3>You are now signed in!</h3>
-<%= link_to "Sign out", destroy_member_session_path, :method => :delete %>
+<%= link_to "Sign out", destroy_player_session_path, :method => :delete %>
 
 <% else %>
 
 <h1>Welcome to Harena</h1>
-<%= link_to "Sign in", new_member_session_path, :method => :get %>
-<%= link_to "Sign up", new_member_registration_path, :method => :get %>
+<%= link_to "Sign in", new_player_session_path, :method => :get %>
+<%= link_to "Sign up", new_player_registration_path, :method => :get %>
 
 <% end %>

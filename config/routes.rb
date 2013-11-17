@@ -16,7 +16,7 @@ Harena::Application.routes.draw do
 
   # Example resource route with options:
   #   resources :products do
-  #     member do
+  #     player do
   #       get 'short'
   #       post 'toggle'
   #     end
@@ -54,7 +54,7 @@ Harena::Application.routes.draw do
   #     resources :products
   #   end
 
-  devise_for :members
+  devise_for :players
 
   root :to => "home#index"
 

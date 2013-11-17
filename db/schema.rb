@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20131112214853) do
 
-  create_table "members", force: true do |t|
+  create_table "players", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(version: 20131112214853) do
     t.string   "username",               default: "", null: false
   end
 
-  add_index "members", ["email"], name: "index_members_on_email", unique: true
-  add_index "members", ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true
-  add_index "members", ["username"], name: "index_members_on_username", unique: true
+  add_index "players", ["email"], name: "index_players_on_email", unique: true
+  add_index "players", ["reset_password_token"], name: "index_players_on_reset_password_token", unique: true
+  add_index "players", ["username"], name: "index_players_on_username", unique: true
 
 end
