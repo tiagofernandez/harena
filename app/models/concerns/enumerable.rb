@@ -10,8 +10,15 @@ module Enumerable
       raise ArgumentError, "Value not found: #{value}"
     end
 
-    def options
-      self.all.invert.map { |key, value| [key, value] }
+    def options(image_picker=nil)
+      self.all.invert.map do |value, key|
+        if image_picker
+          image_picker.default = ''
+          [value, key, { 'data-img-src' => "/assets#{image_picker[:path]}/#{value}" }]
+        else
+          [value, key]
+        end
+      end
     end
   end
 end
