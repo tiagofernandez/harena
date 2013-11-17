@@ -7,10 +7,10 @@ class VictoryTypeTest < ActiveSupport::TestCase
   end
 
   test "should get code for each type of victory" do
-    assert :TKO, VictoryType.get_key('Technical Knockout')
-    assert :CK, VictoryType.get_key('Crystal Kill')
-    assert :R, VictoryType.get_key('Resignation')
-    assert :F, VictoryType.get_key('Forfeit')
+    assert_equal :TKO, VictoryType.get_key('Technical Knockout')
+    assert_equal :CK, VictoryType.get_key('Crystal Kill')
+    assert_equal :R, VictoryType.get_key('Resignation')
+    assert_equal :F, VictoryType.get_key('Forfeit')
     assert_raises(ArgumentError) { VictoryType.get_key('Death') }
   end
 
