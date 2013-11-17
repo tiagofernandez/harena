@@ -6,12 +6,7 @@ class AvatarType
 
   def self.all
     {
-      0   => 'HUM-RaceIcon-hd.png',
-      1   => 'DE-RaceIcon-hd.png',
-      2   => 'DW-RaceIcon-hd.png',
-      3   => 'OR-RaceIcon-hd.png',
-      4   => 'TF2-RaceIcon-hd.png',
-      5   => 'Shaolin-RaceIcon-hd.png',
+      0   => 'UnknownAvatar-hd.jpg',
       100 => 'Annihilator_v1-hd.jpg',
       101 => 'Annihilator_v5-hd.jpg',
       102 => 'Archer_v1-hd.jpg',
