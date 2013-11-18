@@ -32,7 +32,7 @@
     %br
     = f.select :avatar, options_for_select(AvatarType.options(image_picker={:path => '/avatars'}), resource.avatar)
   %div= f.submit "Update"
-%h3 Cancel account
-%p
-  #{button_to "Yes, I want to delete my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete}
+/ %h3 Cancel account
+/ %p
+/   #{button_to "I want to delete my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete}
 = link_to "Back", :back
