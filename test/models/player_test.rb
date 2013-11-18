@@ -4,6 +4,7 @@ class PlayerTest < ActiveSupport::TestCase
 
   def new_player(attributes={})
     attributes[:username]              ||= 'tester'
+    attributes[:avatar]                ||= 106
     attributes[:email]                 ||= 'tester@acme.com'
     attributes[:password]              ||= '0123456789'
     attributes[:password_confirmation] ||= '0123456789'

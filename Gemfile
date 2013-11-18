@@ -44,5 +44,9 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+# Use Haml for HTML
+gem 'haml'
+gem 'html2haml'
+
 # Use Devise for authentication
 gem 'devise'

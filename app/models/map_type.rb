@@ -6,13 +6,13 @@ class MapType
 
   def self.all
     {
-      1 => 'GameBoard-hd',
-      2 => 'GameBoard02-hd',
-      3 => 'GameBoard03-hd',
-      4 => 'DwarfGameBoard-hd',
-      5 => 'OrcGameBoard-hd',
-      6 => 'GameBoard_TF2-hd',
-      7 => 'GameBoard_Shaolin-hd'
+      0 => 'GameBoard-hd',
+      1 => 'GameBoard02-hd',
+      2 => 'GameBoard03-hd',
+      3 => 'DwarfGameBoard-hd',
+      4 => 'OrcGameBoard-hd',
+      5 => 'GameBoard_TF2-hd',
+      6 => 'GameBoard_Shaolin-hd'
     }
   end
 
