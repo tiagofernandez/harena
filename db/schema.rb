@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131117114103) do
+ActiveRecord::Schema.define(version: 20131118215853) do
+
+  create_table "matches", force: true do |t|
+    t.integer  "player1_id"
+    t.integer  "player2_id"
+    t.integer  "winner_id"
+    t.string   "player1_team", default: "", null: false
+    t.string   "player2_team", default: "", null: false
+    t.string   "victory",      default: "", null: false
+    t.integer  "map",          default: 0,  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "matches", ["player1_id"], name: "index_matches_on_player1_id"
+  add_index "matches", ["player2_id"], name: "index_matches_on_player2_id"
+  add_index "matches", ["winner_id"], name: "index_matches_on_winner_id"
 
   create_table "players", force: true do |t|
     t.string   "email",                  default: "", null: false
