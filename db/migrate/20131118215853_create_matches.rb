@@ -7,7 +7,7 @@ class CreateMatches < ActiveRecord::Migration
       t.string     :player1_team, :null => false, :default => ""
       t.string     :player2_team, :null => false, :default => ""
       t.string     :victory,      :null => false, :default => ""
-      t.integer    :map,          :null => false, :default => 0
+      t.integer    :map,          :null => false, :default => -1
       t.timestamps
     end
 
