@@ -14,13 +14,8 @@ class API::TournamentsController < ApplicationController
     elsif not TournamentType.has_key?(kind.to_sym)
       render :status => :bad_request, :text => "Invalid tournament type: #{kind}."
     else
-      tournament = Tournament.new({
-        :title => tournament_params[:title],
-        :kind  => tournament_params[:kind],
-        :rules => tournament_params[:rules]
-      })
-      tournament.save!
-      generate_matches(tournament)
+      tournament = create_tournament(tournament_params)
+      generate_matches(tournament, number_of_participants)
       render :json => { :id => tournament.id }
     end
   end
@@ -39,21 +34,43 @@ class API::TournamentsController < ApplicationController
 
   private
 
-    def generate_matches(tournament)
-      case tournament.kind
-      when 'SRR'
-        generate_matches_for_single_round_robin(tournament)
-      else
-        raise RuntimeError, "Cannot generate matches for tournament type: #{tournament.kind}."
-      end
-    end
+  def create_tournament(params)
+    tournament = Tournament.new({
+      :title => params[:title],
+      :kind  => params[:kind],
+      :rules => params[:rules]
+    })
+    tournament.save!
+    tournament
+  end
 
-    def generate_matches_for_single_round_robin(tournament)
-      puts 'Generating matches!'
+  def generate_matches(tournament, number_of_participants)
+    case tournament.kind
+    when 'SRR'
+      generate_round_robin_matches(tournament, number_of_participants, single=true)
+    when 'DRR'
+      generate_round_robin_matches(tournament, number_of_participants, single=false)
+    else
+      raise RuntimeError, "Cannot generate matches for tournament type: #{tournament.kind}."
     end
+  end
 
-    def tournament_params
-      params.require(:tournament)
+  def generate_round_robin_matches(tournament, number_of_participants, single=true)
+    calculate_round_robin_matches(number_of_participants, single).times do
+      match = Match.new({ :tournament_id => tournament.id })
+      match.save!
     end
+  end
+
+  def calculate_round_robin_matches(number_of_participants, single=true)
+    factor = single ? 1 : 2
+    x = (1..number_of_participants).inject(:*)
+    y = (1..number_of_participants - 2).inject(:*) * 2
+    (x / y) * factor
+  end
+
+  def tournament_params
+    params.require(:tournament)
+  end
 
 end

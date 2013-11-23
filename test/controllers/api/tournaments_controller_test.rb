@@ -26,12 +26,35 @@ class API::TournamentsControllerTest < ActionController::TestCase
   test "should create a single round-robin tournament" do
     assert_difference('Tournament.count') do
       post :create, tournament: {
-        :title                  => 'Death Arena',
+        :title                  => 'All-play-all',
         :kind                   => 'SRR',
-        :rules                  => 'Last one standing wins.',
-        :number_of_participants => '10'
+        :rules                  => 'Set first-turn AP to 3',
+        :number_of_participants => '4'
       }
     end
+    assert_response :success
+    tournament_id = to_json(response)['id']
+    assert_equal 6, Match.where(tournament_id: tournament_id).count
+  end
+
+  test "should create a double round-robin tournament" do
+    assert_difference('Tournament.count') do
+      post :create, tournament: {
+        :title                  => 'All-play-all twice',
+        :kind                   => 'DRR',
+        :rules                  => 'Set first-turn AP to 3',
+        :number_of_participants => '4'
+      }
+    end
+    assert_response :success
+    tournament_id = to_json(response)['id']
+    assert_equal 12, Match.where(tournament_id: tournament_id).count
+  end
+
+  private
+
+  def to_json(response)
+    JSON.parse(response.body)
   end
 
 end
