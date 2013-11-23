@@ -7,8 +7,10 @@ class TournamentTypeTest < ActiveSupport::TestCase
   end
 
   test "should get code for each type of tournament" do
-    assert_equal :RR, TournamentType.get_key('Round-robin')
-    assert_equal :KO, TournamentType.get_key('Knockout')
+    assert_equal :SRR, TournamentType.get_key('Single round-robin')
+    assert_equal :DRR, TournamentType.get_key('Double round-robin')
+    # assert_equal :SEL, TournamentType.get_key('Single-elimination')
+    # assert_equal :DEL, TournamentType.get_key('Double-elimination')
     assert_raises(ArgumentError) { TournamentType.get_key('Poker') }
   end
 

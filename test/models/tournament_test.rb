@@ -10,7 +10,7 @@ class TournamentTest < ActiveSupport::TestCase
   test "should create a tournament" do
     tournament = Tournament.new({
       :title   => 'Death Arena',
-      :kind    => 'RR',
+      :kind    => 'SEL',
       :rules   => 'Last one standing wins.',
       :started => true,
     })
