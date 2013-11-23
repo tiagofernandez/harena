@@ -12,7 +12,7 @@ class TournamentTest < ActiveSupport::TestCase
       :title   => 'Death Arena',
       :kind    => 'SEL',
       :rules   => 'Last one standing wins.',
-      :started => true,
+      :started => true
     })
     assert tournament.save!
     assert tournament.id
