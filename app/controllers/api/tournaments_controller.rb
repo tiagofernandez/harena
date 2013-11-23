@@ -66,7 +66,7 @@ class API::TournamentsController < ApplicationController
     factor = single ? 1 : 2
     x = (1..number_of_participants).inject(:*)
     y = (1..number_of_participants - 2).inject(:*) * 2
-    (x / y) * factor
+    ((x / y) * factor) + factor # take finals into account
   end
 
   def tournament_params
