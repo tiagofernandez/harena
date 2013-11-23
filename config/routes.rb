@@ -56,6 +56,10 @@ Harena::Application.routes.draw do
 
   devise_for :players
 
+  namespace :api, :defaults => {:format => :json} do
+    resources :tournaments
+  end
+
   root :to => "home#index"
 
 end
