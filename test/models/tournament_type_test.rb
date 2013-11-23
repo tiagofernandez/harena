@@ -6,6 +6,12 @@ class TournamentTypeTest < ActiveSupport::TestCase
     assert_equal 2, TournamentType.all.size
   end
 
+  test "should check if a tournament type exists" do
+    assert TournamentType.has_key?(:SRR)
+    assert TournamentType.has_key?(:DRR)
+    refute TournamentType.has_key?(:ZZZ)
+  end
+
   test "should get code for each type of tournament" do
     assert_equal :SRR, TournamentType.get_key('Single round-robin')
     assert_equal :DRR, TournamentType.get_key('Double round-robin')
