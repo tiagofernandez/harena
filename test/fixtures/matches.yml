@@ -4,6 +4,74 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-# one: {}
-# column: value
-#
+srr_1:
+  id: 1
+  tournament_id: 1
+  player1_id: 1
+  player2_id: 2
+  winner_id: 1
+  player1_team: DE
+  player2_team: DW
+  victory: TKO
+  map: 3
+  round: 50
+
+srr_2:
+  id: 2
+  tournament_id: 1
+  player1_id: 1
+  player2_id: 3
+  winner_id: 1
+  player1_team: CL
+  player2_team: TF
+  victory: CK
+  map: 2
+  round: 42
+
+srr_3:
+  id: 3
+  tournament_id: 1
+  player1_id: 1
+  player2_id: 4
+  winner_id: 4
+  player1_team: SL
+  player2_team: TR
+  victory: R
+  map: 4
+  round: 61
+
+srr_4:
+  id: 4
+  tournament_id: 1
+  player1_id: 2
+  player2_id: 3
+  winner_id: 2
+  player1_team: TR
+  player2_team: DE
+  victory: F
+  map: 2
+  round: 20
+
+srr_5:
+  id: 5
+  tournament_id: 1
+  player1_id: 2
+  player2_id: 4
+  winner_id: 2
+  player1_team: CL
+  player2_team: DW
+  victory: CK
+  map: 3
+  round: 33
+
+srr_6:
+  id: 6
+  tournament_id: 1
+  player1_id: 3
+  player2_id: 4
+  winner_id: 3
+  player1_team: SL
+  player2_team: TF
+  victory: TKO
+  map: 5
+  round: 57

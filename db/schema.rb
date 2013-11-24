@@ -52,6 +52,12 @@ ActiveRecord::Schema.define(version: 20131124114750) do
   add_index "players", ["reset_password_token"], name: "index_players_on_reset_password_token", unique: true
   add_index "players", ["username"], name: "index_players_on_username", unique: true
 
+  create_table "registrations", force: true do |t|
+    t.integer "tournament_id"
+    t.integer "player_id"
+    t.boolean "accepted",      default: false, null: false
+  end
+
   create_table "tournaments", force: true do |t|
     t.integer  "creator_id"
     t.integer  "champion_id"
@@ -67,11 +73,5 @@ ActiveRecord::Schema.define(version: 20131124114750) do
   add_index "tournaments", ["champion_id"], name: "index_tournaments_on_champion_id"
   add_index "tournaments", ["creator_id"], name: "index_tournaments_on_creator_id"
   add_index "tournaments", ["runner_up_id"], name: "index_tournaments_on_runner_up_id"
-
-  create_table "tournaments_players", force: true do |t|
-    t.integer "tournament_id"
-    t.integer "player_id"
-    t.boolean "accepted",      default: false, null: false
-  end
 
 end

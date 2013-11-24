@@ -14,8 +14,22 @@ random1:
   id: 1
   username: random1
   email: random1@acme.com
+  avatar: 101
 
 random2:
   id: 2
   username: random2
   email: random2@acme.com
+  avatar: 102
+
+random3:
+  id: 3
+  username: random3
+  email: random3@acme.com
+  avatar: 103
+
+random4:
+  id: 4
+  username: random4
+  email: random4@acme.com
+  avatar: 104

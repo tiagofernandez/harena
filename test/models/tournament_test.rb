@@ -16,7 +16,6 @@ class TournamentTest < ActiveSupport::TestCase
     })
     assert tournament.save!
     assert tournament.id
-    assert_equal 1, Tournament.all.size
   end
 
 end

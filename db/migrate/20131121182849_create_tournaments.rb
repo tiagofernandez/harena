@@ -11,7 +11,7 @@ class CreateTournaments < ActiveRecord::Migration
       t.timestamps
     end
  
-    create_table :tournaments_players do |t|
+    create_table :registrations do |t|
       t.belongs_to :tournament
       t.belongs_to :player
       t.boolean    :accepted, :null => false, :default => false

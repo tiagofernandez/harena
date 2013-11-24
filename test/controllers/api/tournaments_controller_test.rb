@@ -51,6 +51,15 @@ class API::TournamentsControllerTest < ActionController::TestCase
     assert_equal 14, Match.where(tournament_id: tournament_id).count
   end
 
+  test "should get the current ranking for a round-robin tournament" do
+    get :show, id: 1
+    ranking = to_json(response)
+    assert_equal 2.0803, ranking[0]['score']
+    assert_equal 2.0438, ranking[1]['score']
+    assert_equal 1.0175, ranking[2]['score']
+    assert_equal 1.0164, ranking[3]['score']
+  end
+
   private
 
   def to_json(response)

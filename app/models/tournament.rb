@@ -5,6 +5,7 @@ class Tournament < ActiveRecord::Base
   belongs_to :runner_up, :class_name => 'Player', :foreign_key => 'runner_up_id'
 
   has_many :matches
+  has_many :registrations
   has_many :players, through: :registrations
 
 end
