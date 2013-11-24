@@ -67,8 +67,8 @@ class PlayerTest < ActiveSupport::TestCase
   end
 
   test "should validate password length" do
-    player = new_player(:password => '0123', :password_confirmation => '0123')
-    assert_equal ["is too short (minimum is 8 characters)"], player.errors[:password]
+    player = new_player(:password => '123', :password_confirmation => '0123')
+    assert_equal ["is too short (minimum is 4 characters)"], player.errors[:password]
   end
 
 end

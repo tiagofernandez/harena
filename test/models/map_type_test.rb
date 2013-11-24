@@ -6,6 +6,12 @@ class MapTypeTest < ActiveSupport::TestCase
     assert_equal 7, MapType.all.size
   end
 
+  test "should check if a map exists" do
+    assert MapType.has_key?(0)
+    assert MapType.has_key?(1)
+    refute MapType.has_key?(99)
+  end
+
   test "should get code for each map" do
     assert_equal 0, MapType.get_key('GameBoard-hd')
     assert_equal 1, MapType.get_key('GameBoard02-hd')
