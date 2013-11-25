@@ -34,7 +34,7 @@ class API::TournamentsControllerTest < ActionController::TestCase
     end
     assert_response :success
     tournament_id = to_json(response)['id']
-    assert_equal 7, Match.where(tournament_id: tournament_id).count
+    assert_equal 6, Match.where(tournament_id: tournament_id).count
   end
 
   test "should create a double round-robin tournament" do
@@ -48,7 +48,7 @@ class API::TournamentsControllerTest < ActionController::TestCase
     end
     assert_response :success
     tournament_id = to_json(response)['id']
-    assert_equal 14, Match.where(tournament_id: tournament_id).count
+    assert_equal 12, Match.where(tournament_id: tournament_id).count
   end
 
   test "should get the current ranking for a round-robin tournament" do
