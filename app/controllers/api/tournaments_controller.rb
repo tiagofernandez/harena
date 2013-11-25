@@ -30,6 +30,10 @@ class API::TournamentsController < ApplicationController
     end
   end
 
+  def start
+    render :json => {}
+  end
+
   def show
     tournament = Tournament.find_by_id(params[:id])
     if tournament
