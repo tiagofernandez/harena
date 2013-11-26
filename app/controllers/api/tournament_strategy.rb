@@ -1,8 +1,8 @@
 class API::TournamentStrategy
 
-  def self.generate_matches(tournament, number_of_participants)
+  def self.generate_matches(tournament)
     if tournament.round_robin?
-      RoundRobinStrategy.new(tournament).generate_matches(number_of_participants)
+      RoundRobinStrategy.new(tournament).generate_matches
     else
       raise NotImplementedError
     end
@@ -10,7 +10,7 @@ class API::TournamentStrategy
 
   def self.resolve_ranking(tournament)
     if tournament.round_robin?
-      RoundRobinStrategy.new(tournament).resolve_ranking()
+      RoundRobinStrategy.new(tournament).resolve_ranking
     else
       raise NotImplementedError
     end
@@ -23,9 +23,19 @@ class RoundRobinStrategy < API::TournamentStrategy
     @tournament = tournament
   end
 
-  def generate_matches(number_of_participants)
-    calculate_number_of_matches(number_of_participants).times do
-      match = Match.new({ :tournament_id => @tournament.id })
+  def generate_matches
+    participants = get_accepted_players
+    if participants.size < 4 or participants.size > 20
+      raise NotImplementedError
+    end
+    permutations = participants.permutation(2).to_a.map { |p| [p[0].id, p[1].id] }.sort
+    permutations.select! { |x| x[0] < x[1] } if @tournament.single_round_robin?
+    permutations.each do |x|
+      match = Match.new({
+        :tournament_id => @tournament.id,
+        :player1_id    => x[0],
+        :player2_id    => x[1]
+      })
       match.save!
     end
   end
@@ -63,19 +73,6 @@ class RoundRobinStrategy < API::TournamentStrategy
   
   private
 
-  def calculate_number_of_matches(number_of_participants)
-    factor = @tournament.single_round_robin? ? 1 : 2
-    x = (1..number_of_participants).inject(:*)
-    y = (1..number_of_participants - 2).inject(:*) * 2
-    result = (x / y) * factor
-    result
-  end
-  
-  def update_score(current_score, match_score)
-    result = (current_score + match_score).round(4)
-    result
-  end
-
   def get_accepted_players
     players = Player.joins(:tournaments).where(
       "tournament_id = :tournament_id AND accepted = :accepted",
@@ -88,5 +85,19 @@ class RoundRobinStrategy < API::TournamentStrategy
       "tournament_id = :tournament_id AND winner_id IS NOT NULL",
       { tournament_id: @tournament.id })
     matches
+  end
+
+  def update_score(current_score, match_score)
+    result = (current_score + match_score).round(4)
+    result
+  end
+
+  # Not used, kept here only for further reference (besides the math is cool!)
+  def calculate_number_of_matches(number_of_participants)
+    factor = @tournament.single_round_robin? ? 1 : 2
+    x = (1..number_of_participants).inject(:*)
+    y = (1..number_of_participants - 2).inject(:*) * 2
+    result = (x / y) * factor
+    result
   end
 end

@@ -1,10 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# This model initially had no columns defined.  If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-srr_1:
+1:
   id: 1
   tournament_id: 1
   player1_id: 1
@@ -16,7 +12,7 @@ srr_1:
   map: 3
   round: 50
 
-srr_2:
+2:
   id: 2
   tournament_id: 1
   player1_id: 1
@@ -28,7 +24,7 @@ srr_2:
   map: 2
   round: 42
 
-srr_3:
+3:
   id: 3
   tournament_id: 1
   player1_id: 1
@@ -40,7 +36,7 @@ srr_3:
   map: 4
   round: 61
 
-srr_4:
+4:
   id: 4
   tournament_id: 1
   player1_id: 2
@@ -52,7 +48,7 @@ srr_4:
   map: 2
   round: 20
 
-srr_5:
+5:
   id: 5
   tournament_id: 1
   player1_id: 2
@@ -64,7 +60,7 @@ srr_5:
   map: 3
   round: 33
 
-srr_6:
+6:
   id: 6
   tournament_id: 1
   player1_id: 3

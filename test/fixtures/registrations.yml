@@ -1,25 +1,41 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# This model initially had no columns defined.  If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one:
+1:
   tournament_id: 1
   player_id: 1
   accepted: true
 
-two:
+2:
   tournament_id: 1
   player_id: 2
   accepted: true
 
-three:
+3:
   tournament_id: 1
   player_id: 3
   accepted: true
 
-four:
+4:
   tournament_id: 1
+  player_id: 4
+  accepted: true
+
+5:
+  tournament_id: 2
+  player_id: 1
+  accepted: true
+
+6:
+  tournament_id: 2
+  player_id: 2
+  accepted: true
+
+7:
+  tournament_id: 2
+  player_id: 3
+  accepted: true
+
+8:
+  tournament_id: 2
   player_id: 4
   accepted: true

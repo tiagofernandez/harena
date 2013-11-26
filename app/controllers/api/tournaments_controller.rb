@@ -6,12 +6,9 @@ class API::TournamentsController < ApplicationController
 
   def create
     tournament_param = params.require(:tournament)
-    params = tournament_param.permit(:title, :kind, :rules, :number_of_participants)
-    number_of_participants = params[:number_of_participants].to_i or -1
-
-    if number_of_participants < 4 or number_of_participants > 20
-      render :status => :bad_request, :text => "Invalid number of participants."
-    elsif not TournamentType.has_key?(params[:kind].to_sym)
+    params = tournament_param.permit(:title, :kind, :rules)
+    
+    if not TournamentType.has_key?(params[:kind].to_sym)
       render :status => :bad_request, :text => "Invalid tournament type."
     else
       tournament = Tournament.new({
@@ -20,22 +17,24 @@ class API::TournamentsController < ApplicationController
         :rules => params[:rules]
       })
       tournament.save!
-      begin
-        # TODO: generate matches only when the tournament gets started
-        API::TournamentStrategy.generate_matches(tournament, number_of_participants)
-      rescue NotImplementedError
-        render :status => :not_implemented, :text => "Unsupported tournament type."
-      end
       render :json => { :id => tournament.id }
     end
   end
 
   def start
-    render :json => {}
+    tournament = get_tournament(params[:id])
+    begin
+      API::TournamentStrategy.generate_matches(tournament)
+      tournament.started = true
+      tournament.save!
+      render :json => { :started => tournament.started }
+    rescue NotImplementedError
+      render :status => :not_implemented, :text => "Unsupported number of participants."
+    end
   end
 
   def show
-    tournament = Tournament.find_by_id(params[:id])
+    tournament = get_tournament(params[:id])
     if tournament
       begin
         render :json => API::TournamentStrategy.resolve_ranking(tournament)
@@ -53,5 +52,11 @@ class API::TournamentsController < ApplicationController
 
   def destroy
     render :json => {}
+  end
+
+  private
+
+  def get_tournament(id)
+    Tournament.find_by_id(id)
   end
 end

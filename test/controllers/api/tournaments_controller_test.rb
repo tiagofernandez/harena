@@ -2,24 +2,12 @@ require 'test_helper'
 
 class API::TournamentsControllerTest < ActionController::TestCase
 
-  test "should require the number of participants when creating a tournament" do
-    post :create, tournament: { :kind => 'SRR' }
-    assert_response :bad_request
-  end
-
   test "should reject invalid types of tournament" do
-    tournament = { :number_of_participants => '10' }
-    post :create, tournament: tournament.merge({ :kind => 'ZZZ' })
-    assert_response :bad_request
-  end
-
-  test "should not allow less than 4 participants in a tournament" do
-    post :create, tournament: { :number_of_participants => '3' }
-    assert_response :bad_request
-  end
-
-  test "should not allow more than 20 participants in a tournament" do
-    post :create, tournament: { :number_of_participants => '21' }
+    post :create, tournament: {
+      :title => 'Invalid',
+      :kind  => 'PKR',
+      :rules => 'None'
+    }
     assert_response :bad_request
   end
 
@@ -33,8 +21,7 @@ class API::TournamentsControllerTest < ActionController::TestCase
       }
     end
     assert_response :success
-    tournament_id = to_json(response)['id']
-    assert_equal 6, Match.where(tournament_id: tournament_id).count
+    assert to_json(response)['id']
   end
 
   test "should create a double round-robin tournament" do
@@ -47,8 +34,7 @@ class API::TournamentsControllerTest < ActionController::TestCase
       }
     end
     assert_response :success
-    tournament_id = to_json(response)['id']
-    assert_equal 12, Match.where(tournament_id: tournament_id).count
+    assert to_json(response)['id']
   end
 
   test "should get the current ranking for a round-robin tournament" do
@@ -58,6 +44,39 @@ class API::TournamentsControllerTest < ActionController::TestCase
     assert_equal 2.0438, ranking[1]['score']
     assert_equal 1.0175, ranking[2]['score']
     assert_equal 1.0164, ranking[3]['score']
+  end
+
+  test "should not allow starting a tournament with less than 4 participants" do
+    Registration.destroy_all(:tournament_id => 3)
+    3.times do |id|
+      Registration.new({
+        :tournament_id => 3,
+        :player_id     => id,
+        :accepted      => true
+      }).save!
+    end
+    post :start, :id => '3'
+    assert_response :not_implemented
+  end
+
+  test "should not allow starting a tournament with more than 20 participants" do
+    Registration.destroy_all(:tournament_id => 3)
+    21.times do |id|
+      Registration.new({
+        :tournament_id => 3,
+        :player_id     => id,
+        :accepted      => true
+      }).save!
+    end
+    post :start, :id => '3'
+    assert_response :not_implemented
+  end
+
+  test "should start a tournament with the minimum number of participants" do
+    post :start, :id => '2'
+    assert_response :success
+    assert to_json(response)['started']
+    assert_equal 6, Match.where(tournament_id: 1).count
   end
 
   private
