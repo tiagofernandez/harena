@@ -46,6 +46,11 @@ class API::TournamentsControllerTest < ActionController::TestCase
     assert_equal 1.0164, ranking[3]['score']
   end
 
+  test "should not allow starting a tournament already started" do
+    post :start, :id => '1'
+    assert_response :bad_request
+  end
+
   test "should not allow starting a tournament with less than 4 participants" do
     Registration.destroy_all(:tournament_id => 3)
     3.times do |id|

@@ -23,13 +23,17 @@ class API::TournamentsController < ApplicationController
 
   def start
     tournament = get_tournament(params[:id])
-    begin
-      API::TournamentStrategy.generate_matches(tournament)
-      tournament.started = true
-      tournament.save!
-      render :json => { :started => tournament.started }
-    rescue NotImplementedError
-      render :status => :not_implemented, :text => "Unsupported number of participants."
+    if tournament.started
+      render :status => :bad_request, :text => "Tournament already started."
+    else
+      begin
+        API::TournamentStrategy.generate_matches(tournament)
+        tournament.started = true
+        tournament.save!
+        render :json => { :started => tournament.started }
+      rescue NotImplementedError
+        render :status => :not_implemented, :text => "Unsupported number of participants."
+      end
     end
   end
 
