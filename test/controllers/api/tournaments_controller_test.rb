@@ -90,10 +90,31 @@ class API::TournamentsControllerTest < ActionController::TestCase
     assert_equal 6, Match.where(tournament_id: 1).count
   end
 
+  test "should update a tournament's rules" do
+    post :update, id: 1, tournament: {
+      'rules' => 'Set first-turn AP to 3'
+    }
+    assert_response :success
+    assert_not_equal 'None', Tournament.find(1).rules
+  end
+
+  test "should allow deleting a tournament that hasn't started yet" do
+    new_tournament = Tournament.new
+    new_tournament.save!
+    post :destroy, id: new_tournament.id
+    assert_response :success
+    assert_equal 0, Tournament.where(id: new_tournament.id).count
+  end
+
+  test "should not allow deleting a tournament that has already started" do
+    post :destroy, id: 1
+    assert_response :forbidden
+    assert Tournament.find(1)
+  end
+
   private
 
   def to_json(response)
     JSON.parse(response.body)
   end
-
 end

@@ -53,10 +53,28 @@ class API::TournamentsController < ApplicationController
   end
 
   def update
-    render :json => {}
+    tournament = Tournament.find_by_id(params[:id])
+    if tournament
+      safe_params = params.require(:tournament).permit(:rules)
+      tournament.rules = safe_params[:rules]
+      tournament.save!
+      render :nothing => true, :status => :no_content
+    else
+      render :status => :not_found, :text => "Tournament not found."
+    end
   end
 
   def destroy
-    render :json => {}
+    tournament = Tournament.find_by_id(params[:id])
+    if tournament
+      if tournament.started
+        render :status => :forbidden, :text => "Cannot delete started tournaments."
+      else
+        tournament.destroy
+        render :nothing => true, :status => :no_content
+      end
+    else
+      render :status => :not_found, :text => "Tournament not found."
+    end
   end
 end
