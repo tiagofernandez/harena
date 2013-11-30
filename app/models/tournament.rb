@@ -19,4 +19,8 @@ class Tournament < ActiveRecord::Base
   def double_round_robin?
     kind == 'DRR'
   end
+
+  def can_be_managed_by?(player)
+    host_id == player.id
+  end
 end
