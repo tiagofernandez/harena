@@ -17,14 +17,14 @@ ActiveRecord::Schema.define(version: 20131124114750) do
     t.integer  "player1_id"
     t.integer  "player2_id"
     t.integer  "winner_id"
-    t.string   "player1_team",  default: "", null: false
-    t.string   "player2_team",  default: "", null: false
-    t.string   "victory",       default: "", null: false
-    t.integer  "map",           default: -1, null: false
+    t.string   "player1_team"
+    t.string   "player2_team"
+    t.string   "victory"
+    t.integer  "map"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "tournament_id"
-    t.integer  "round",         default: 1,  null: false
+    t.integer  "round"
   end
 
   add_index "matches", ["player1_id"], name: "index_matches_on_player1_id"
@@ -62,10 +62,10 @@ ActiveRecord::Schema.define(version: 20131124114750) do
     t.integer  "creator_id"
     t.integer  "champion_id"
     t.integer  "runner_up_id"
-    t.string   "title",        default: "",    null: false
-    t.string   "kind",         default: "",    null: false
-    t.string   "rules",        default: "",    null: false
-    t.boolean  "started",      default: false, null: false
+    t.string   "title"
+    t.string   "kind"
+    t.string   "rules",        limit: 1024
+    t.boolean  "started",                   default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

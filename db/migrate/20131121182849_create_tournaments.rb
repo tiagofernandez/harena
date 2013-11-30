@@ -4,9 +4,9 @@ class CreateTournaments < ActiveRecord::Migration
       t.references :creator
       t.references :champion
       t.references :runner_up
-      t.string     :title,     :null => false, :default => ""
-      t.string     :kind,      :null => false, :default => ""
-      t.string     :rules,     :null => false, :default => ""
+      t.string     :title
+      t.string     :kind
+      t.string     :rules,     :limit => 1024
       t.boolean    :started,   :null => false, :default => false
       t.timestamps
     end
