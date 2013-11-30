@@ -9,11 +9,9 @@ class API::TournamentsController < ApplicationController
   end
 
   def create
-    tournament_param = params.require(:tournament)
-    params = tournament_param.permit(:title, :kind, :rules)
-    
-    if not TournamentType.has_key?(params[:kind].to_sym)
-      render :status => :bad_request, :text => "Invalid tournament type."
+    safe_params = params.require(:tournament).permit(:title, :kind, :rules)
+    if not TournamentType.has_key?(safe_params[:kind].to_sym)
+      render :status => :bad_request, :text => "Cannot create tournament for tournament type: #{params[:kind]}."
     else
       tournament = Tournament.new({
         :title => params[:title],

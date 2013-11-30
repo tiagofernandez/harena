@@ -10,9 +10,9 @@ class API::TournamentsControllerTest < ActionController::TestCase
 
   test "should reject invalid types of tournament" do
     post :create, tournament: {
-      :title => 'Invalid',
-      :kind  => 'PKR',
-      :rules => 'None'
+      'title' => 'Invalid',
+      'kind'  => 'PKR',
+      'rules' => 'None'
     }
     assert_response :bad_request
   end
@@ -20,10 +20,10 @@ class API::TournamentsControllerTest < ActionController::TestCase
   test "should create a single round-robin tournament" do
     assert_difference('Tournament.count') do
       post :create, tournament: {
-        :title                  => 'All-play-all',
-        :kind                   => 'SRR',
-        :rules                  => 'Set first-turn AP to 3',
-        :number_of_participants => '4'
+        'title'                  => 'All-play-all',
+        'kind'                   => 'SRR',
+        'rules'                  => 'Set first-turn AP to 3',
+        'number_of_participants' => 4
       }
     end
     assert_response :success
@@ -33,10 +33,10 @@ class API::TournamentsControllerTest < ActionController::TestCase
   test "should create a double round-robin tournament" do
     assert_difference('Tournament.count') do
       post :create, tournament: {
-        :title                  => 'All-play-all twice',
-        :kind                   => 'DRR',
-        :rules                  => 'Set first-turn AP to 3',
-        :number_of_participants => '4'
+        'title'                  => 'All-play-all twice',
+        'kind'                   => 'DRR',
+        'rules'                  => 'Set first-turn AP to 3',
+        'number_of_participants' => 4
       }
     end
     assert_response :success
@@ -53,7 +53,7 @@ class API::TournamentsControllerTest < ActionController::TestCase
   end
 
   test "should not allow starting a tournament already started" do
-    post :start, :id => '1'
+    post :start, :id => 1
     assert_response :bad_request
   end
 
@@ -66,7 +66,7 @@ class API::TournamentsControllerTest < ActionController::TestCase
         :accepted      => true
       }).save!
     end
-    post :start, :id => '3'
+    post :start, :id => 3
     assert_response :not_implemented
   end
 
@@ -79,12 +79,12 @@ class API::TournamentsControllerTest < ActionController::TestCase
         :accepted      => true
       }).save!
     end
-    post :start, :id => '3'
+    post :start, id: 3
     assert_response :not_implemented
   end
 
   test "should start a tournament with the minimum number of participants" do
-    post :start, :id => '2'
+    post :start, id: 2
     assert_response :success
     assert to_json(response)['started']
     assert_equal 6, Match.where(tournament_id: 1).count
