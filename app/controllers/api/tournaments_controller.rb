@@ -35,8 +35,8 @@ class API::TournamentsController < ApplicationController
         tournament.started = true
         tournament.save!
         render :json => { :started => tournament.started }
-      rescue NotImplementedError
-        render :status => :not_implemented, :text => "Unsupported number of participants."
+      rescue NotImplementedError => err
+        render :status => :not_implemented, :text => err.message
       end
     end
   end
@@ -46,8 +46,8 @@ class API::TournamentsController < ApplicationController
     if tournament
       begin
         render :json => API::TournamentStrategy.resolve_ranking(tournament)
-      rescue NotImplementedError
-        render :status => :not_implemented, :text => "Unsupported tournament type."
+      rescue NotImplementedError => err
+        render :status => :not_implemented, :text => err.message
       end
     else
       render :status => :not_found, :text => "Tournament not found."

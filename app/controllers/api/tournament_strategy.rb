@@ -4,7 +4,7 @@ class API::TournamentStrategy
     if tournament.round_robin?
       RoundRobinStrategy.new(tournament).generate_matches
     else
-      raise NotImplementedError
+      raise NotImplementedError, "Cannot generate matches for tournament type: #{tournament.kind}."
     end
   end
 
@@ -12,7 +12,7 @@ class API::TournamentStrategy
     if tournament.round_robin?
       RoundRobinStrategy.new(tournament).resolve_ranking
     else
-      raise NotImplementedError
+      raise NotImplementedError, "Cannot resolve ranking for tournament type: #{tournament.kind}."
     end
   end
 end
@@ -26,7 +26,7 @@ class RoundRobinStrategy < API::TournamentStrategy
   def generate_matches
     participants = get_accepted_players
     if participants.size < 4 or participants.size > 20
-      raise NotImplementedError
+      raise NotImplementedError, "Number of participants must be between 4 and 20."
     end
     permutations = participants.permutation(2).to_a.map { |p| [p[0].id, p[1].id] }.sort
     permutations.select! { |x| x[0] < x[1] } if @tournament.single_round_robin?
