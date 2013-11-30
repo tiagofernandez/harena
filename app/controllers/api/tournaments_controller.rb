@@ -1,7 +1,11 @@
 class API::TournamentsController < ApplicationController
 
   def index
-    render :json => Tournament.all
+    render :json =>
+      Tournament
+        .where(:started => true)
+        .order(updated_at: :desc)
+        .limit(20)
   end
 
   def create
@@ -22,7 +26,7 @@ class API::TournamentsController < ApplicationController
   end
 
   def start
-    tournament = get_tournament(params[:id])
+    tournament = Tournament.find_by_id(params[:id])
     if tournament.started
       render :status => :bad_request, :text => "Tournament already started."
     else
@@ -38,7 +42,7 @@ class API::TournamentsController < ApplicationController
   end
 
   def show
-    tournament = get_tournament(params[:id])
+    tournament = Tournament.find_by_id(params[:id])
     if tournament
       begin
         render :json => API::TournamentStrategy.resolve_ranking(tournament)
@@ -56,11 +60,5 @@ class API::TournamentsController < ApplicationController
 
   def destroy
     render :json => {}
-  end
-
-  private
-
-  def get_tournament(id)
-    Tournament.find_by_id(id)
   end
 end

@@ -2,6 +2,12 @@ require 'test_helper'
 
 class API::TournamentsControllerTest < ActionController::TestCase
 
+  test "should get the latest active tournaments" do
+    get :index
+    assert_response :success
+    assert_equal 1, to_json(response).size
+  end
+
   test "should reject invalid types of tournament" do
     post :create, tournament: {
       :title => 'Invalid',
