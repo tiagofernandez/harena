@@ -14,6 +14,7 @@ class API::TournamentsController < ApplicationController
       render :status => :bad_request, :text => "Cannot create tournament for tournament type: #{params[:kind]}."
     else
       tournament = Tournament.new({
+        :host  => current_player,
         :title => params[:title],
         :kind  => params[:kind],
         :rules => params[:rules]
@@ -27,7 +28,7 @@ class API::TournamentsController < ApplicationController
     tournament = Tournament.find_by_id(params[:id])
     if tournament.started
       render :status => :bad_request, :text => "Tournament already started."
-    else
+    elsif tournament.can_be_managed_by?(current_player)
       begin
         API::TournamentStrategy.generate_matches(tournament)
         tournament.started = true
@@ -36,6 +37,8 @@ class API::TournamentsController < ApplicationController
       rescue NotImplementedError => err
         render :status => :not_implemented, :text => err.message
       end
+    else
+      render :status => :unauthorized, :text => "Only the host can start this tournament."
     end
   end
 
@@ -55,10 +58,14 @@ class API::TournamentsController < ApplicationController
   def update
     tournament = Tournament.find_by_id(params[:id])
     if tournament
-      safe_params = params.require(:tournament).permit(:rules)
-      tournament.rules = safe_params[:rules]
-      tournament.save!
-      render :nothing => true, :status => :no_content
+      if tournament.can_be_managed_by?(current_player)
+        safe_params = params.require(:tournament).permit(:rules)
+        tournament.rules = safe_params[:rules]
+        tournament.save!
+        render :nothing => true, :status => :no_content
+      else
+        render :status => :unauthorized, :text => "No permission to update tournament."
+      end
     else
       render :status => :not_found, :text => "Tournament not found."
     end
@@ -67,11 +74,11 @@ class API::TournamentsController < ApplicationController
   def destroy
     tournament = Tournament.find_by_id(params[:id])
     if tournament
-      if tournament.started
-        render :status => :forbidden, :text => "Cannot delete started tournaments."
-      else
+      if tournament.can_be_managed_by?(current_player) and not tournament.started
         tournament.destroy
         render :nothing => true, :status => :no_content
+      else
+        render :status => :unauthorized, :text => "No permission to delete tournament."
       end
     else
       render :status => :not_found, :text => "Tournament not found."

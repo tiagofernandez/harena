@@ -1,6 +1,6 @@
 class Tournament < ActiveRecord::Base
 
-  belongs_to :creator,   :class_name => 'Player', :foreign_key => 'creator_id'
+  belongs_to :host,      :class_name => 'Player', :foreign_key => 'host_id'
   belongs_to :champion,  :class_name => 'Player', :foreign_key => 'champion_id'
   belongs_to :runner_up, :class_name => 'Player', :foreign_key => 'runner_up_id'
 
@@ -18,5 +18,9 @@ class Tournament < ActiveRecord::Base
 
   def double_round_robin?
     kind == 'DRR'
+  end
+
+  def can_be_managed_by?(player)
+    host_id == player.id
   end
 end

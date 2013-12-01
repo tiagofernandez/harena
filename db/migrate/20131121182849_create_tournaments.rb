@@ -1,7 +1,7 @@
 class CreateTournaments < ActiveRecord::Migration
   def change
     create_table :tournaments do |t|
-      t.references :creator
+      t.references :host
       t.references :champion
       t.references :runner_up
       t.string     :title
@@ -19,7 +19,7 @@ class CreateTournaments < ActiveRecord::Migration
 
     add_column :matches, :tournament_id, :integer
 
-    add_index :tournaments, :creator_id
+    add_index :tournaments, :host_id
     add_index :tournaments, :champion_id
     add_index :tournaments, :runner_up_id
   end
