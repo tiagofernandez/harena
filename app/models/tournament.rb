@@ -21,6 +21,6 @@ class Tournament < ActiveRecord::Base
   end
 
   def can_be_managed_by?(player)
-    host_id == player.id
+    host.id == player.id
   end
 end
