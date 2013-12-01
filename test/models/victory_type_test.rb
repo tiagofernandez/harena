@@ -6,6 +6,12 @@ class VictoryTypeTest < ActiveSupport::TestCase
     assert_equal 4, VictoryType.all.size
   end
 
+  test "should check if a victory type exists" do
+    assert VictoryType.has_key?(:TKO)
+    assert VictoryType.has_key?(:CK)
+    refute VictoryType.has_key?(:D)
+  end
+
   test "should get code for each type of victory" do
     assert_equal :TKO, VictoryType.get_key('Technical Knockout')
     assert_equal :CK, VictoryType.get_key('Crystal Kill')

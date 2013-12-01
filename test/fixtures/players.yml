@@ -1,10 +1,127 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# This model initially had no columns defined.  If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
 warloktus:
+  id: 0
   username: Warloktus
-  email: tiago.fernandez@gmail.com
+  email: warloktus@icloud.com
   avatar: 183
+
+random1:
+  id: 1
+  username: random1
+  email: random1@acme.com
+  avatar: 101
+
+random2:
+  id: 2
+  username: random2
+  email: random2@acme.com
+  avatar: 102
+
+random3:
+  id: 3
+  username: random3
+  email: random3@acme.com
+  avatar: 103
+
+random4:
+  id: 4
+  username: random4
+  email: random4@acme.com
+  avatar: 104
+
+random5:
+  id: 5
+  username: random5
+  email: random5@acme.com
+  avatar: 105
+
+random6:
+  id: 6
+  username: random6
+  email: random6@acme.com
+  avatar: 106
+
+random7:
+  id: 7
+  username: random7
+  email: random7@acme.com
+  avatar: 107
+
+random8:
+  id: 8
+  username: random8
+  email: random8@acme.com
+  avatar: 108
+
+random9:
+  id: 9
+  username: random9
+  email: random9@acme.com
+  avatar: 109
+
+random10:
+  id: 10
+  username: random10
+  email: random10@acme.com
+  avatar: 110
+
+random11:
+  id: 11
+  username: random11
+  email: random11@acme.com
+  avatar: 111
+
+random12:
+  id: 12
+  username: random12
+  email: random12@acme.com
+  avatar: 112
+
+random13:
+  id: 13
+  username: random13
+  email: random13@acme.com
+  avatar: 113
+
+random14:
+  id: 14
+  username: random14
+  email: random14@acme.com
+  avatar: 114
+
+random15:
+  id: 15
+  username: random15
+  email: random15@acme.com
+  avatar: 115
+
+random16:
+  id: 16
+  username: random16
+  email: random16@acme.com
+  avatar: 116
+
+random17:
+  id: 17
+  username: random17
+  email: random17@acme.com
+  avatar: 117
+
+random18:
+  id: 18
+  username: random18
+  email: random18@acme.com
+  avatar: 118
+
+random19:
+  id: 19
+  username: random19
+  email: random19@acme.com
+  avatar: 119
+
+random20:
+  id: 20
+  username: random20
+  email: random20@acme.com
+  avatar: 120

@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+1:
+  tournament_id: 1
+  player_id: 1
+  accepted: true
+
+2:
+  tournament_id: 1
+  player_id: 2
+  accepted: true
+
+3:
+  tournament_id: 1
+  player_id: 3
+  accepted: true
+
+4:
+  tournament_id: 1
+  player_id: 4
+  accepted: true
+
+5:
+  tournament_id: 2
+  player_id: 1
+  accepted: true
+
+6:
+  tournament_id: 2
+  player_id: 2
+  accepted: true
+
+7:
+  tournament_id: 2
+  player_id: 3
+  accepted: true
+
+8:
+  tournament_id: 2
+  player_id: 4
+  accepted: true

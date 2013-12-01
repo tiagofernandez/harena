@@ -11,7 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131117114103) do
+ActiveRecord::Schema.define(version: 20131124114750) do
+
+  create_table "matches", force: true do |t|
+    t.integer  "player1_id"
+    t.integer  "player2_id"
+    t.integer  "winner_id"
+    t.string   "player1_team"
+    t.string   "player2_team"
+    t.string   "victory"
+    t.integer  "map"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "tournament_id"
+    t.integer  "round"
+  end
+
+  add_index "matches", ["player1_id"], name: "index_matches_on_player1_id"
+  add_index "matches", ["player2_id"], name: "index_matches_on_player2_id"
+  add_index "matches", ["winner_id"], name: "index_matches_on_winner_id"
 
   create_table "players", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -33,5 +51,27 @@ ActiveRecord::Schema.define(version: 20131117114103) do
   add_index "players", ["email"], name: "index_players_on_email", unique: true
   add_index "players", ["reset_password_token"], name: "index_players_on_reset_password_token", unique: true
   add_index "players", ["username"], name: "index_players_on_username", unique: true
+
+  create_table "registrations", force: true do |t|
+    t.integer "tournament_id"
+    t.integer "player_id"
+    t.boolean "accepted",      default: false, null: false
+  end
+
+  create_table "tournaments", force: true do |t|
+    t.integer  "creator_id"
+    t.integer  "champion_id"
+    t.integer  "runner_up_id"
+    t.string   "title"
+    t.string   "kind"
+    t.string   "rules",        limit: 1024
+    t.boolean  "started",                   default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tournaments", ["champion_id"], name: "index_tournaments_on_champion_id"
+  add_index "tournaments", ["creator_id"], name: "index_tournaments_on_creator_id"
+  add_index "tournaments", ["runner_up_id"], name: "index_tournaments_on_runner_up_id"
 
 end

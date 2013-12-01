@@ -6,6 +6,12 @@ class TeamTypeTest < ActiveSupport::TestCase
     assert_equal 6, TeamType.all.size
   end
 
+  test "should check if a team exists" do
+    assert TeamType.has_key?(:CL)
+    assert TeamType.has_key?(:DE)
+    refute TeamType.has_key?(:ZZ)
+  end
+
   test "should get code for each team" do
     assert_equal :CL, TeamType.get_key('Council')
     assert_equal :DE, TeamType.get_key('Dark Elves')

@@ -10,6 +10,10 @@ module Enumerable
       raise ArgumentError, "Value not found: #{value}"
     end
 
+    def has_key?(key)
+      self.all.has_key?(key)
+    end
+
     def options(image_picker=nil)
       self.all.invert.map do |value, key|
         if image_picker

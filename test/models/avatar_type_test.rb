@@ -3,7 +3,13 @@ require 'test_helper'
 class AvatarTypeTest < ActiveSupport::TestCase
 
   test "should list all avatars" do
-    assert_equal 122, AvatarType.all.size
+    assert_equal 117, AvatarType.all.size
+  end
+
+  test "should check if an avatar exists" do
+    assert AvatarType.has_key?(100)
+    assert AvatarType.has_key?(215)
+    refute AvatarType.has_key?(999)
   end
 
   test "should get code for each avatar" do
