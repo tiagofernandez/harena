@@ -16,4 +16,8 @@ end
 
 class ActionController::TestCase
   include Devise::TestHelpers
+
+  def json_response
+    JSON.parse(@response.body)
+  end
 end

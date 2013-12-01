@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class API::TournamentsControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
 
   def setup
     @request.env["devise.mapping"] = Devise.mappings[:player]
@@ -11,7 +10,7 @@ class API::TournamentsControllerTest < ActionController::TestCase
   test "should get the latest active tournaments" do
     get :index
     assert_response :success
-    assert_equal 2, to_json(response).size
+    assert_equal 2, json_response.size
   end
 
   test "should reject invalid types of tournament" do
@@ -32,7 +31,7 @@ class API::TournamentsControllerTest < ActionController::TestCase
       }
     end
     assert_response :success
-    tournament_id = to_json(response)['id']
+    tournament_id = json_response['id']
     assert tournament_id
     assert_equal 1, Tournament.find(tournament_id).host.id
   end
@@ -46,14 +45,14 @@ class API::TournamentsControllerTest < ActionController::TestCase
       }
     end
     assert_response :success
-    tournament_id = to_json(response)['id']
+    tournament_id = json_response['id']
     assert tournament_id
     assert_equal 1, Tournament.find(tournament_id).host.id
   end
 
   test "should get the current ranking for a round-robin tournament" do
     get :show, id: 1
-    ranking = to_json(response)
+    ranking = json_response
     assert_equal 2.0803, ranking[0]['score']
     assert_equal 2.0438, ranking[1]['score']
     assert_equal 1.0175, ranking[2]['score']
@@ -102,7 +101,7 @@ class API::TournamentsControllerTest < ActionController::TestCase
     tournament_id = 2
     post :start, id: tournament_id
     assert_response :success
-    assert to_json(response)['started']
+    assert json_response['started']
     assert_equal 6, Match.where(tournament_id: tournament_id).count
   end
 
@@ -144,11 +143,5 @@ class API::TournamentsControllerTest < ActionController::TestCase
     post :destroy, id: tournament_id
     assert_response :unauthorized
     assert Tournament.find(tournament_id)
-  end
-
-  private
-
-  def to_json(response)
-    JSON.parse(response.body)
   end
 end
