@@ -4,10 +4,10 @@ class CreateMatches < ActiveRecord::Migration
       t.references :player1
       t.references :player2
       t.references :winner
-      t.string     :player1_team, :null => false, :default => ""
-      t.string     :player2_team, :null => false, :default => ""
-      t.string     :victory,      :null => false, :default => ""
-      t.integer    :map,          :null => false, :default => -1
+      t.string     :player1_team
+      t.string     :player2_team
+      t.string     :victory
+      t.integer    :map
       t.timestamps
     end
 

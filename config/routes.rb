@@ -58,6 +58,7 @@ Harena::Application.routes.draw do
 
   namespace :api, :defaults => {:format => :json}, except: [:new, :edit] do
     resources :tournaments
+    post '/tournaments/:id/start', to: 'tournaments#start'
   end
 
   root :to => "home#index"

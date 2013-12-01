@@ -16,7 +16,6 @@ class MatchTest < ActiveSupport::TestCase
     })
     assert match.save!
     assert match.id
-    assert_equal 1, Match.all.size
 
     match.winner  = @player2
     match.victory = 'TKO'
