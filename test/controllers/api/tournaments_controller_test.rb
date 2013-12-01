@@ -3,7 +3,6 @@ require 'test_helper'
 class API::TournamentsControllerTest < ActionController::TestCase
 
   def setup
-    @request.env["devise.mapping"] = Devise.mappings[:player]
     sign_in players(:random1)
   end
 
