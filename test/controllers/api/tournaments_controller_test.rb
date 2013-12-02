@@ -101,7 +101,7 @@ class API::TournamentsControllerTest < ActionController::TestCase
     post :start, id: tournament_id
     assert_response :success
     assert json_response['started']
-    assert_equal 6, Match.where(tournament_id: tournament_id).count
+    assert_equal 8, Match.where(tournament_id: tournament_id).count
   end
 
   test "should allow updating a tournament" do

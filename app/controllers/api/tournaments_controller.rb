@@ -60,7 +60,7 @@ class API::TournamentsController < ApplicationController
     if tournament
       if tournament.can_be_managed_by?(current_player)
         safe_params = params.require(:tournament).permit(:rules)
-        tournament.rules = safe_params[:rules]
+        tournament.attributes = safe_params
         tournament.save!
         render :nothing => true, :status => :no_content
       else
