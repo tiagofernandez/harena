@@ -74,7 +74,7 @@ class API::TournamentsController < ApplicationController
   def destroy
     tournament = Tournament.find_by_id(params[:id])
     if tournament
-      if tournament.can_be_managed_by?(current_player) and not tournament.started
+      if tournament.can_be_managed_by?(current_player) && !tournament.started
         tournament.destroy
         render :nothing => true, :status => :no_content
       else

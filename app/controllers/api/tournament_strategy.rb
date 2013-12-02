@@ -25,7 +25,7 @@ class RoundRobinStrategy < API::TournamentStrategy
 
   def generate_matches
     participants = get_accepted_players
-    if participants.size < 4 or participants.size > 20
+    if participants.size < 4 || participants.size > 20
       raise NotImplementedError, "Number of participants must be between 4 and 20."
     end
     permutations = participants.permutation(2).to_a.map { |p| [p[0].id, p[1].id] }.sort
