@@ -19,6 +19,16 @@ end
 
 class RoundRobinStrategy < API::TournamentStrategy
 
+  @@number_letter_map = {
+    1  => 'A', 2  => 'B', 3  => 'C', 4  => 'D',
+    5  => 'E', 6  => 'F', 7  => 'G', 8  => 'H',
+    9  => 'I', 10 => 'J', 11 => 'K', 12 => 'L',
+    13 => 'M', 14 => 'N', 15 => 'O', 16 => 'P',
+    17 => 'Q', 18 => 'R', 19 => 'S', 20 => 'T',
+    21 => 'U', 22 => 'V', 23 => 'W',
+    24 => 'X', 25 => 'Y', 26 => 'Z'
+  }
+
   def initialize(tournament)
     @tournament = tournament
   end
@@ -30,9 +40,11 @@ class RoundRobinStrategy < API::TournamentStrategy
     end
     permutations = participants.permutation(2).to_a.map { |p| [p[0].id, p[1].id] }.sort
     permutations.select! { |x| x[0] < x[1] } if @tournament.single_round_robin?
-    permutations.each do |x|
+    pools = generate_pools(permutations.size)
+    permutations.each_with_index do |x, idx|
       match = Match.new({
         :tournament_id => @tournament.id,
+        :pool          => pools[idx],
         :player1_id    => x[0],
         :player2_id    => x[1]
       })
@@ -56,7 +68,6 @@ class RoundRobinStrategy < API::TournamentStrategy
       player1 = participants[match.player1_id]
       player2 = participants[match.player2_id]
       match_score = 1 + (1.0 / match.round).round(4)
-
       if match.winner_id == match.player1_id
         player1[:wins]   += 1
         player2[:losses] += 1
@@ -90,6 +101,23 @@ class RoundRobinStrategy < API::TournamentStrategy
   def update_score(current_score, match_score)
     result = (current_score + match_score).round(4)
     result
+  end
+
+  def generate_pools(number_of_matches)
+    pools, section = {}, 0
+    number_of_letters = @@number_letter_map.size
+    number_of_matches.times do |idx|
+      number = idx + 1
+      if number <= number_of_letters
+        pools[idx] = @@number_letter_map[number]
+      else
+        remainder = number % number_of_letters
+        section += 1 if remainder == 1
+        sub_section = (remainder != 0) ? remainder : number_of_letters
+        pools[idx] = "#{@@number_letter_map[section]}#{@@number_letter_map[sub_section]}"
+      end
+    end
+    pools
   end
 
   # Not used, kept here only for further reference (besides the math is cool!)
