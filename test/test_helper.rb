@@ -16,4 +16,12 @@ end
 
 class ActionController::TestCase
   include Devise::TestHelpers
+
+  def setup
+    # @request.env["devise.mapping"] = Devise.mappings[:player]
+  end
+
+  def json_response
+    JSON.parse(@response.body)
+  end
 end
