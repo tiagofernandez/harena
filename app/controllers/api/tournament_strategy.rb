@@ -35,8 +35,9 @@ class RoundRobinStrategy < API::TournamentStrategy
 
   def generate_matches
     participants = get_accepted_players
-    if participants.size < 4 || participants.size > 20
-      raise NotImplementedError, "Number of participants must be between 4 and 20."
+    no_participants = participants.size
+    if no_participants < 4 || no_participants > 20 || no_participants % 2 != 0
+      raise NotImplementedError, "Number of participants must be an even number between 4 and 20."
     end
     permutations = participants.permutation(2).to_a.map { |p| [p[0].id, p[1].id] }.sort
     permutations.select! { |x| x[0] < x[1] } if @tournament.round_robin?
@@ -103,17 +104,17 @@ class RoundRobinStrategy < API::TournamentStrategy
     result
   end
 
-  def generate_pools(number_of_matches)
+  def generate_pools(no_matches)
     pools, section = {}, 0
-    number_of_letters = @@number_letter_map.size
-    number_of_matches.times do |idx|
+    no_letters = @@number_letter_map.size
+    no_matches.times do |idx|
       number = idx + 1
-      if number <= number_of_letters
+      if number <= no_letters
         pools[idx] = @@number_letter_map[number]
       else
-        remainder = number % number_of_letters
+        remainder = number % no_letters
         section += 1 if remainder == 1
-        sub_section = (remainder != 0) ? remainder : number_of_letters
+        sub_section = (remainder != 0) ? remainder : no_letters
         pools[idx] = "#{@@number_letter_map[section]}#{@@number_letter_map[sub_section]}"
       end
     end
@@ -121,10 +122,10 @@ class RoundRobinStrategy < API::TournamentStrategy
   end
 
   # Not used, kept here only for further reference (besides the math is cool!)
-  def calculate_number_of_matches(number_of_participants)
-    factor = @tournament.single_round_robin? ? 1 : 2
-    x = (1..number_of_participants).inject(:*)
-    y = (1..number_of_participants - 2).inject(:*) * 2
+  def calculate_number_of_matches(no_participants, double=false)
+    factor = double ? 2 : 1
+    x = (1..no_participants).inject(:*)
+    y = (1..no_participants - 2).inject(:*) * 2
     result = (x / y) * factor
     result
   end

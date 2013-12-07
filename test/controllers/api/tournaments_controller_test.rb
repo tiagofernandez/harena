@@ -82,6 +82,20 @@ class API::TournamentsControllerTest < ActionController::TestCase
     assert_response :not_implemented
   end
 
+  test "should not allow starting a tournament with an even number of participants" do
+    tournament_id = 3
+    Registration.destroy_all(:tournament_id => tournament_id)
+    9.times do |id|
+      Registration.new({
+        :tournament_id => tournament_id,
+        :player_id     => id,
+        :accepted      => true
+      }).save!
+    end
+    post :start, id: 3
+    assert_response :not_implemented
+  end
+
   test "should start a tournament with the minimum number of participants" do
     tournament_id = 2
     post :start, id: tournament_id
