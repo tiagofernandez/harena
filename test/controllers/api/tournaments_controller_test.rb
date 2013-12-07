@@ -15,31 +15,17 @@ class API::TournamentsControllerTest < ActionController::TestCase
   test "should reject invalid types of tournament" do
     post :create, tournament: {
       'title' => 'Invalid',
-      'kind'  => 'PKR',
+      'kind'  => 'PK',
       'rules' => 'None'
     }
     assert_response :bad_request
   end
 
-  test "should create a single round-robin tournament" do
+  test "should create a round-robin tournament" do
     assert_difference('Tournament.count') do
       post :create, tournament: {
         'title' => 'All-play-all',
-        'kind'  => 'SRR',
-        'rules' => 'Set first-turn AP to 3'
-      }
-    end
-    assert_response :success
-    tournament_id = json_response['id']
-    assert tournament_id
-    assert_equal 1, Tournament.find(tournament_id).host.id
-  end
-
-  test "should create a double round-robin tournament" do
-    assert_difference('Tournament.count') do
-      post :create, tournament: {
-        'title' => 'All-play-all twice',
-        'kind'  => 'DRR',
+        'kind'  => 'RR',
         'rules' => 'Set first-turn AP to 3'
       }
     end

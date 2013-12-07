@@ -39,7 +39,7 @@ class RoundRobinStrategy < API::TournamentStrategy
       raise NotImplementedError, "Number of participants must be between 4 and 20."
     end
     permutations = participants.permutation(2).to_a.map { |p| [p[0].id, p[1].id] }.sort
-    permutations.select! { |x| x[0] < x[1] } if @tournament.single_round_robin?
+    permutations.select! { |x| x[0] < x[1] } if @tournament.round_robin?
     pools = generate_pools(permutations.size)
     permutations.each_with_index do |x, idx|
       match = Match.new({
