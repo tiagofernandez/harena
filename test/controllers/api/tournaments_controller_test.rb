@@ -110,8 +110,9 @@ class API::TournamentsControllerTest < ActionController::TestCase
     assert_equal 15, created_matches.count
     scheduled = {}
     created_matches.each do |m|
-      pool, round = m.pool, m.pool[0...m.pool.index(':')]
+      pool = m.pool
       assert pool.include?(':')
+      round = pool[0...pool.index(':')]
       scheduled[round] = [] if !scheduled.include?(round)
       refute scheduled[round].include?(m.player1.id)
       refute scheduled[round].include?(m.player2.id)
