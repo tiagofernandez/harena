@@ -15,4 +15,18 @@ class Tournament < ActiveRecord::Base
   def can_be_managed_by?(player)
     host.id == player.id
   end
+
+  def get_accepted_players
+    players = Player.joins(:tournaments).where(
+      "tournament_id = :tournament_id AND accepted = :accepted",
+      { tournament_id: id, accepted: true })
+    players
+  end
+
+  def get_finished_matches
+    matches = Match.where(
+      "tournament_id = :tournament_id AND winner_id IS NOT NULL",
+      { tournament_id: id })
+    matches
+  end
 end

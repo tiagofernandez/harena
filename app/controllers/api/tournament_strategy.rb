@@ -34,7 +34,7 @@ class RoundRobinStrategy < API::TournamentStrategy
   end
 
   def generate_matches
-    participants = get_accepted_players
+    participants = @tournament.get_accepted_players
     no_participants = participants.size
     if no_participants < 4 || no_participants > 20 || no_participants % 2 != 0
       raise NotImplementedError, "Number of participants must be an even number between 4 and 20."
@@ -54,7 +54,7 @@ class RoundRobinStrategy < API::TournamentStrategy
   end
   
   def resolve_ranking
-    participants = get_accepted_players.inject({}) do |result, player|
+    participants = @tournament.get_accepted_players.inject({}) do |result, player|
       result[player.id] = {
         :id       => player.id,
         :username => player.username,
@@ -65,7 +65,7 @@ class RoundRobinStrategy < API::TournamentStrategy
       }
       result
     end
-    get_finished_matches.each do |match|
+    @tournament.get_finished_matches.each do |match|
       player1 = participants[match.player1_id]
       player2 = participants[match.player2_id]
       match_score = 1 + (1.0 / match.round).round(4)
@@ -84,20 +84,6 @@ class RoundRobinStrategy < API::TournamentStrategy
   end
   
   private
-
-  def get_accepted_players
-    players = Player.joins(:tournaments).where(
-      "tournament_id = :tournament_id AND accepted = :accepted",
-      { tournament_id: @tournament.id, accepted: true })
-    players
-  end
-
-  def get_finished_matches
-    matches = Match.where(
-      "tournament_id = :tournament_id AND winner_id IS NOT NULL",
-      { tournament_id: @tournament.id })
-    matches
-  end
 
   def update_score(current_score, match_score)
     result = (current_score + match_score).round(4)
