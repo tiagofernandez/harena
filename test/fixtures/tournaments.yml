@@ -47,3 +47,11 @@
   kind: 'SRR'
   rules: 'None'
   started: false
+
+7:
+  id: 7
+  host_id: 1
+  title: 'Tournament #7'
+  kind: 'SRR'
+  rules: 'None'
+  started: false

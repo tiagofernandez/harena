@@ -26,7 +26,9 @@ class API::TournamentsController < ApplicationController
 
   def start
     tournament = Tournament.find_by_id(params[:id])
-    if tournament.started
+    if !tournament
+      render :status => :not_found, :text => "Tournament not found."
+    elsif tournament.started
       render :status => :bad_request, :text => "Tournament already started."
     elsif tournament.can_be_managed_by?(current_player)
       begin

@@ -3,7 +3,7 @@
 1:
   id: 1
   tournament_id: 1
-  pool: A
+  pool: 1:A
   player1_id: 1
   player2_id: 2
   winner_id: 1
@@ -16,7 +16,7 @@
 2:
   id: 2
   tournament_id: 1
-  pool: B
+  pool: 1:B
   player1_id: 1
   player2_id: 3
   winner_id: 1
@@ -29,7 +29,7 @@
 3:
   id: 3
   tournament_id: 1
-  pool: C
+  pool: 1:C
   player1_id: 1
   player2_id: 4
   winner_id: 4
@@ -42,7 +42,7 @@
 4:
   id: 4
   tournament_id: 1
-  pool: D
+  pool: 1:D
   player1_id: 2
   player2_id: 3
   winner_id: 2
@@ -55,7 +55,7 @@
 5:
   id: 5
   tournament_id: 1
-  pool: E
+  pool: 1:E
   player1_id: 2
   player2_id: 4
   winner_id: 2
@@ -68,7 +68,7 @@
 6:
   id: 6
   tournament_id: 1
-  pool: F
+  pool: 1:F
   player1_id: 3
   player2_id: 4
   winner_id: 3
@@ -81,20 +81,20 @@
 7:
   id: 7
   tournament_id: 2
-  pool: A
+  pool: 1:A
   player1_id: 1
   player2_id: 4
 
 8:
   id: 8
   tournament_id: 2
-  pool: B
+  pool: 1:B
   player1_id: 2
   player2_id: 3
 
 9:
   id: 9
   tournament_id: 4
-  pool: C
+  pool: 1:A
   player1_id: 3
   player2_id: 4

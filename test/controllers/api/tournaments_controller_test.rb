@@ -54,6 +54,11 @@ class API::TournamentsControllerTest < ActionController::TestCase
     assert_response :unauthorized
   end
 
+  test "should not allow starting an unexisting tournament" do
+    post :start, :id => 99
+    assert_response :not_found
+  end
+
   test "should not allow starting a tournament with less than 4 participants" do
     tournament_id = 3
     Registration.destroy_all(:tournament_id => tournament_id)
@@ -97,13 +102,13 @@ class API::TournamentsControllerTest < ActionController::TestCase
   end
 
   test "should start a tournament with the minimum number of participants" do
-    tournament_id = 2
+    tournament_id = 7
     post :start, id: tournament_id
     assert_response :success
     assert json_response['started']
     created_matches = Match.where(tournament_id: tournament_id)
-    assert_equal 8, created_matches.count
-    created_matches.each do |m| assert_not_nil m.pool end
+    assert_equal 15, created_matches.count
+    created_matches.each do |m| assert m.pool.include?(':') end
   end
 
   test "should allow updating a tournament" do
