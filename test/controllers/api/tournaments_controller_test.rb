@@ -15,7 +15,7 @@ class API::TournamentsControllerTest < ActionController::TestCase
   test "should reject invalid types of tournament" do
     post :create, tournament: {
       'title' => 'Invalid',
-      'kind'  => 'PK',
+      'kind'  => 'PKR',
       'rules' => 'None'
     }
     assert_response :bad_request
@@ -25,7 +25,7 @@ class API::TournamentsControllerTest < ActionController::TestCase
     assert_difference('Tournament.count') do
       post :create, tournament: {
         'title' => 'All-play-all',
-        'kind'  => 'RR',
+        'kind'  => 'SRR',
         'rules' => 'Set first-turn AP to 3'
       }
     end

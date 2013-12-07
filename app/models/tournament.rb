@@ -9,7 +9,7 @@ class Tournament < ActiveRecord::Base
   has_many :players, through: :registrations
 
   def round_robin?
-    kind == 'RR'
+    kind == 'SRR'
   end
 
   def can_be_managed_by?(player)

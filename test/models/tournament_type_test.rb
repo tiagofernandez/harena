@@ -7,13 +7,13 @@ class TournamentTypeTest < ActiveSupport::TestCase
   end
 
   test "should check if a tournament type exists" do
-    assert TournamentType.has_key?(:RR)
-    refute TournamentType.has_key?(:KO)
-    refute TournamentType.has_key?(:PK)
+    assert TournamentType.has_key?(:SRR)
+    refute TournamentType.has_key?(:SKO)
+    refute TournamentType.has_key?(:PKR)
   end
 
   test "should get code for each type of tournament" do
-    assert_equal :RR, TournamentType.get_key('Round-robin')
+    assert_equal :SRR, TournamentType.get_key('Round-robin')
     assert_raises(ArgumentError) { TournamentType.get_key('Knockout') }
     assert_raises(ArgumentError) { TournamentType.get_key('Poker') }
   end

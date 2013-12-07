@@ -6,8 +6,8 @@ class TournamentType
 
   def self.all
     {
-      :RR => 'Round-robin',
-      # :KO => 'Knockout',
+      :SRR => 'Round-robin',
+      # :SKO => 'Knockout',
     }
   end
 
