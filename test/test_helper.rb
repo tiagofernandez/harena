@@ -21,6 +21,11 @@ class ActionController::TestCase
     # @request.env["devise.mapping"] = Devise.mappings[:player]
   end
 
+  def force_sign_in(player)
+    sign_out :player
+    sign_in player
+  end
+
   def json_response
     JSON.parse(@response.body)
   end
