@@ -59,7 +59,9 @@ Harena::Application.routes.draw do
   namespace :api, :defaults => {:format => :json} do
 
     resources :tournaments, except: [:new, :edit]
-    post '/tournaments/:id/start', to: 'tournaments#start'
+    post  '/tournaments/:id/start',    to: 'tournaments#start'
+    post  '/tournaments/:id/register', to: 'tournaments#register'
+    patch '/tournaments/:id/accept',   to: 'tournaments#accept'
     
     resources :matches, only: [:show, :update]
   end

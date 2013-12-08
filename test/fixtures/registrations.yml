@@ -69,3 +69,13 @@
   tournament_id: 7
   player_id: 6
   accepted: true
+
+15:
+  tournament_id: 7
+  player_id: 7
+  accepted: false
+
+16:
+  tournament_id: 8
+  player_id: 2
+  accepted: true

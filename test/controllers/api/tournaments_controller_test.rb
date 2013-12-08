@@ -55,7 +55,7 @@ class API::TournamentsControllerTest < ActionController::TestCase
   end
 
   test "should not allow starting an unexisting tournament" do
-    post :start, :id => 99
+    post :start, :id => -1
     assert_response :not_found
   end
 
@@ -160,5 +160,52 @@ class API::TournamentsControllerTest < ActionController::TestCase
     post :destroy, id: tournament_id
     assert_response :unauthorized
     assert Tournament.find(tournament_id)
+  end
+
+  test "should not allow registering to unexisting tournaments" do
+    post :register, id: -1
+    assert_response :not_found
+  end
+
+  test "should not allow registering to started tournaments" do
+    post :register, id: 4
+    assert_response :bad_request
+  end
+
+  test "should not allow registering twice to the same tournament" do
+    post :register, id: 2
+    assert_response :conflict
+  end
+
+  test "should register to a tournament that hasn't already started" do
+    post :register, id: 6
+    assert_response :success
+  end
+
+  test "should not accept a registration of an unexisting tournament" do
+    post :accept, id: -1
+    assert_response :not_found
+  end
+
+  test "should not accept players once the tournament has already started" do
+    post :accept, id: 4
+    assert_response :bad_request
+  end
+
+  test "should not accept unregistered players" do
+    post :accept, id: 8
+    assert_response :conflict
+  end
+
+  test "should accept or reject registered players" do
+    tournament_id, player_id = 7, 7
+    post :accept, id: tournament_id, player_id: player_id, accepted: true
+    assert_response :success
+    registration = Registration.where(tournament_id: tournament_id, player_id: player_id).first
+    assert registration.accepted
+    post :accept, id: tournament_id, player_id: player_id, accepted: false
+    assert_response :success
+    registration = Registration.where(tournament_id: tournament_id, player_id: player_id).first
+    refute registration.accepted
   end
 end
