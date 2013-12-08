@@ -3,20 +3,18 @@ require 'test_helper'
 class TournamentTypeTest < ActiveSupport::TestCase
 
   test "should list all types of tournament" do
-    assert_equal 2, TournamentType.all.size
+    assert_equal 1, TournamentType.all.size
   end
 
   test "should check if a tournament type exists" do
     assert TournamentType.has_key?(:SRR)
-    assert TournamentType.has_key?(:DRR)
-    refute TournamentType.has_key?(:ZZZ)
+    refute TournamentType.has_key?(:SKO)
+    refute TournamentType.has_key?(:PKR)
   end
 
   test "should get code for each type of tournament" do
-    assert_equal :SRR, TournamentType.get_key('Single round-robin')
-    assert_equal :DRR, TournamentType.get_key('Double round-robin')
-    # assert_equal :SEL, TournamentType.get_key('Single-elimination')
-    # assert_equal :DEL, TournamentType.get_key('Double-elimination')
+    assert_equal :SRR, TournamentType.get_key('Round-robin')
+    assert_raises(ArgumentError) { TournamentType.get_key('Knockout') }
     assert_raises(ArgumentError) { TournamentType.get_key('Poker') }
   end
 

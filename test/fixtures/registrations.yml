@@ -39,3 +39,33 @@
   tournament_id: 2
   player_id: 4
   accepted: true
+
+9:
+  tournament_id: 7
+  player_id: 1
+  accepted: true
+
+10:
+  tournament_id: 7
+  player_id: 2
+  accepted: true
+
+11:
+  tournament_id: 7
+  player_id: 3
+  accepted: true
+
+12:
+  tournament_id: 7
+  player_id: 4
+  accepted: true
+
+13:
+  tournament_id: 7
+  player_id: 5
+  accepted: true
+
+14:
+  tournament_id: 7
+  player_id: 6
+  accepted: true

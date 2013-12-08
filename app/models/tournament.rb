@@ -9,18 +9,24 @@ class Tournament < ActiveRecord::Base
   has_many :players, through: :registrations
 
   def round_robin?
-    single_round_robin? or double_round_robin?
-  end
-
-  def single_round_robin?
     kind == 'SRR'
   end
 
-  def double_round_robin?
-    kind == 'DRR'
+  def can_be_managed_by?(player)
+    host.id == player.id
   end
 
-  def can_be_managed_by?(player)
-    host_id == player.id
+  def get_accepted_players
+    players = Player.joins(:tournaments).where(
+      "tournament_id = :tournament_id AND accepted = :accepted",
+      { tournament_id: id, accepted: true })
+    players
+  end
+
+  def get_finished_matches
+    matches = Match.where(
+      "tournament_id = :tournament_id AND winner_id IS NOT NULL",
+      { tournament_id: id })
+    matches
   end
 end

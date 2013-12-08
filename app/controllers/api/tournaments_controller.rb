@@ -26,7 +26,9 @@ class API::TournamentsController < ApplicationController
 
   def start
     tournament = Tournament.find_by_id(params[:id])
-    if tournament.started
+    if !tournament
+      render :status => :not_found, :text => "Tournament not found."
+    elsif tournament.started
       render :status => :bad_request, :text => "Tournament already started."
     elsif tournament.can_be_managed_by?(current_player)
       begin
@@ -60,7 +62,7 @@ class API::TournamentsController < ApplicationController
     if tournament
       if tournament.can_be_managed_by?(current_player)
         safe_params = params.require(:tournament).permit(:rules)
-        tournament.rules = safe_params[:rules]
+        tournament.attributes = safe_params
         tournament.save!
         render :nothing => true, :status => :no_content
       else
@@ -74,7 +76,7 @@ class API::TournamentsController < ApplicationController
   def destroy
     tournament = Tournament.find_by_id(params[:id])
     if tournament
-      if tournament.can_be_managed_by?(current_player) and not tournament.started
+      if tournament.can_be_managed_by?(current_player) && !tournament.started
         tournament.destroy
         render :nothing => true, :status => :no_content
       else

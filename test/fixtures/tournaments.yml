@@ -20,7 +20,7 @@
   id: 3
   host_id: 1
   title: 'Tournament #3'
-  kind: 'DRR'
+  kind: 'SRR'
   rules: 'None'
   started: false
 
@@ -36,7 +36,7 @@
   id: 5
   host_id: 1
   title: 'Tournament #5'
-  kind: 'DRR'
+  kind: 'SRR'
   rules: 'None'
   started: false
 
@@ -44,6 +44,22 @@
   id: 6
   host_id: 2
   title: 'Tournament #6'
+  kind: 'SRR'
+  rules: 'None'
+  started: false
+
+7:
+  id: 7
+  host_id: 1
+  title: 'Tournament #7'
+  kind: 'SRR'
+  rules: 'None'
+  started: false
+
+8:
+  id: 8
+  host_id: 2
+  title: 'Tournament #8'
   kind: 'SRR'
   rules: 'None'
   started: false
