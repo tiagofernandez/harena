@@ -98,3 +98,23 @@
   pool: 1:A
   player1_id: 3
   player2_id: 4
+
+10:
+  id: 10
+  tournament_id: 8
+  pool: 1:A
+  player1_id: 1
+  player2_id: 3
+  winner_id: 3
+  player1_team: DW
+  player2_team: DE
+  victory: CK
+  map: 2
+  round: 41
+
+11:
+  id: 11
+  tournament_id: 8
+  pool: 1:B
+  player1_id: 2
+  player2_id: 3

@@ -6,6 +6,16 @@ class Match < ActiveRecord::Base
 
   def can_be_managed_by?(player)
     match_player = player1.id == player.id || player2.id == player.id
-    match_player || Tournament.find(tournament_id).host.id == player.id
+    match_player || tournament_host_id == player.id
+  end
+
+  def locked_for?(player)
+    winner && tournament_host_id != player.id
+  end
+
+  private
+
+  def tournament_host_id
+    Tournament.find(tournament_id).host.id
   end
 end

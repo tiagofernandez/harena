@@ -69,11 +69,33 @@ class API::MatchesControllerTest < ActionController::TestCase
     assert_response :unauthorized
   end
 
-  test "should not allow updating a match's players" do
-    # TODO
+  test "should only allow the host to update a finished match" do
+    match_id = 10
+    post :update, id: match_id, match: { 'winner_id' => 1 }
+    assert_response :unauthorized
+    assert_equal 3, Match.find(match_id).winner.id
+    force_sign_in players(:random2)
+    post :update, id: match_id, match: { 'round' => 61 }
+    assert_response :success
+    assert_equal 61, Match.find(match_id).round
   end
 
-  test "should not allow updating a locked match" do
-    # TODO
+  test "should require details when reporting a match" do
+    match_id = 11
+    force_sign_in players(:random3)
+    post :update, id: match_id, match: { 'winner_id' => 3 }
+    assert_response :bad_request
+  end
+
+  test "should enforce the winner being one of the two players of that match " do
+    match_id = 11
+    force_sign_in players(:random3)
+    post :update, id: match_id, match: {
+      'winner_id' => 4,
+      'victory'   => 'TKO',
+      'map'       => 4,
+      'round'     => 52
+    }
+    assert_response :conflict
   end
 end
