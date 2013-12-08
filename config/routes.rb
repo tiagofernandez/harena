@@ -56,9 +56,14 @@ Harena::Application.routes.draw do
 
   devise_for :players
 
-  namespace :api, :defaults => {:format => :json}, except: [:new, :edit] do
-    resources :tournaments
-    post '/tournaments/:id/start', to: 'tournaments#start'
+  namespace :api, :defaults => {:format => :json} do
+
+    resources :tournaments, except: [:new, :edit]
+    post  '/tournaments/:id/start',    to: 'tournaments#start'
+    post  '/tournaments/:id/register', to: 'tournaments#register'
+    patch '/tournaments/:id/accept',   to: 'tournaments#accept'
+    
+    resources :matches, only: [:show, :update]
   end
 
   root :to => "home#index"

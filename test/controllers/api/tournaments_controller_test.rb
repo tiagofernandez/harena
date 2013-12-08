@@ -2,10 +2,14 @@ require 'test_helper'
 
 class API::TournamentsControllerTest < ActionController::TestCase
 
+  def setup
+    sign_in players(:random1)
+  end
+
   test "should get the latest active tournaments" do
     get :index
     assert_response :success
-    assert_equal 1, to_json(response).size
+    assert_equal 2, json_response.size
   end
 
   test "should reject invalid types of tournament" do
@@ -17,35 +21,23 @@ class API::TournamentsControllerTest < ActionController::TestCase
     assert_response :bad_request
   end
 
-  test "should create a single round-robin tournament" do
+  test "should create a round-robin tournament" do
     assert_difference('Tournament.count') do
       post :create, tournament: {
-        'title'                  => 'All-play-all',
-        'kind'                   => 'SRR',
-        'rules'                  => 'Set first-turn AP to 3',
-        'number_of_participants' => 4
+        'title' => 'All-play-all',
+        'kind'  => 'SRR',
+        'rules' => 'Set first-turn AP to 3'
       }
     end
     assert_response :success
-    assert to_json(response)['id']
-  end
-
-  test "should create a double round-robin tournament" do
-    assert_difference('Tournament.count') do
-      post :create, tournament: {
-        'title'                  => 'All-play-all twice',
-        'kind'                   => 'DRR',
-        'rules'                  => 'Set first-turn AP to 3',
-        'number_of_participants' => 4
-      }
-    end
-    assert_response :success
-    assert to_json(response)['id']
+    tournament_id = json_response['id']
+    assert tournament_id
+    assert_equal 1, Tournament.find(tournament_id).host.id
   end
 
   test "should get the current ranking for a round-robin tournament" do
     get :show, id: 1
-    ranking = to_json(response)
+    ranking = json_response
     assert_equal 2.0803, ranking[0]['score']
     assert_equal 2.0438, ranking[1]['score']
     assert_equal 1.0175, ranking[2]['score']
@@ -57,24 +49,50 @@ class API::TournamentsControllerTest < ActionController::TestCase
     assert_response :bad_request
   end
 
+  test "should not allow starting another player's tournament" do
+    post :start, :id => 6
+    assert_response :unauthorized
+  end
+
+  test "should not allow starting an unexisting tournament" do
+    post :start, :id => -1
+    assert_response :not_found
+  end
+
   test "should not allow starting a tournament with less than 4 participants" do
-    Registration.destroy_all(:tournament_id => 3)
+    tournament_id = 3
+    Registration.destroy_all(:tournament_id => tournament_id)
     3.times do |id|
       Registration.new({
-        :tournament_id => 3,
+        :tournament_id => tournament_id,
         :player_id     => id,
         :accepted      => true
       }).save!
     end
-    post :start, :id => 3
+    post :start, :id => tournament_id
     assert_response :not_implemented
   end
 
   test "should not allow starting a tournament with more than 20 participants" do
-    Registration.destroy_all(:tournament_id => 3)
+    tournament_id = 3
+    Registration.destroy_all(:tournament_id => tournament_id)
     21.times do |id|
       Registration.new({
-        :tournament_id => 3,
+        :tournament_id => tournament_id,
+        :player_id     => id,
+        :accepted      => true
+      }).save!
+    end
+    post :start, id: 3
+    assert_response :not_implemented
+  end
+
+  test "should not allow starting a tournament with an even number of participants" do
+    tournament_id = 3
+    Registration.destroy_all(:tournament_id => tournament_id)
+    9.times do |id|
+      Registration.new({
+        :tournament_id => tournament_id,
         :player_id     => id,
         :accepted      => true
       }).save!
@@ -84,22 +102,46 @@ class API::TournamentsControllerTest < ActionController::TestCase
   end
 
   test "should start a tournament with the minimum number of participants" do
-    post :start, id: 2
+    tournament_id = 7
+    post :start, id: tournament_id
     assert_response :success
-    assert to_json(response)['started']
-    assert_equal 6, Match.where(tournament_id: 1).count
+    assert json_response['started']
+    created_matches = Match.where(tournament_id: tournament_id)
+    assert_equal 15, created_matches.count
+    scheduled = {}
+    created_matches.each do |m|
+      pool = m.pool
+      assert pool.include?(':')
+      round = pool[0...pool.index(':')]
+      scheduled[round] = [] if !scheduled.include?(round)
+      refute scheduled[round].include?(m.player1.id)
+      refute scheduled[round].include?(m.player2.id)
+      scheduled[round] << m.player1.id << m.player2.id
+    end
+    played = created_matches.map { |m| [m.player1.id, m.player2.id] }.flatten
+    1.upto(6) { |player_id| assert_equal 5, played.count(player_id) }
   end
 
-  test "should update a tournament's rules" do
-    post :update, id: 1, tournament: {
+  test "should allow updating a tournament" do
+    tournament_id = 1
+    post :update, id: tournament_id, tournament: {
       'rules' => 'Set first-turn AP to 3'
     }
     assert_response :success
-    assert_not_equal 'None', Tournament.find(1).rules
+    assert_not_equal 'None', Tournament.find(tournament_id).rules
+  end
+
+  test "should not allow updating another player's tournament" do
+    tournament_id = 6
+    post :update, id: tournament_id, tournament: {
+      'rules' => 'Set first-turn AP to 3'
+    }
+    assert_response :unauthorized
+    assert_equal 'None', Tournament.find(tournament_id).rules
   end
 
   test "should allow deleting a tournament that hasn't started yet" do
-    new_tournament = Tournament.new
+    new_tournament = Tournament.new({ :host_id => 1 })
     new_tournament.save!
     post :destroy, id: new_tournament.id
     assert_response :success
@@ -107,14 +149,63 @@ class API::TournamentsControllerTest < ActionController::TestCase
   end
 
   test "should not allow deleting a tournament that has already started" do
-    post :destroy, id: 1
-    assert_response :forbidden
-    assert Tournament.find(1)
+    tournament_id = 1
+    post :destroy, id: tournament_id
+    assert_response :unauthorized
+    assert Tournament.find(tournament_id)
   end
 
-  private
+  test "should not allow deleting another player's tournament" do
+    tournament_id = 4
+    post :destroy, id: tournament_id
+    assert_response :unauthorized
+    assert Tournament.find(tournament_id)
+  end
 
-  def to_json(response)
-    JSON.parse(response.body)
+  test "should not allow registering to unexisting tournaments" do
+    post :register, id: -1
+    assert_response :not_found
+  end
+
+  test "should not allow registering to started tournaments" do
+    post :register, id: 4
+    assert_response :bad_request
+  end
+
+  test "should not allow registering twice to the same tournament" do
+    post :register, id: 2
+    assert_response :conflict
+  end
+
+  test "should register to a tournament that hasn't already started" do
+    post :register, id: 6
+    assert_response :success
+  end
+
+  test "should not accept a registration of an unexisting tournament" do
+    post :accept, id: -1
+    assert_response :not_found
+  end
+
+  test "should not accept players once the tournament has already started" do
+    post :accept, id: 4
+    assert_response :bad_request
+  end
+
+  test "should not accept unregistered players" do
+    post :accept, id: 8
+    assert_response :conflict
+  end
+
+  test "should accept or reject registered players" do
+    tournament_id, player_id = 7, 7
+    post :accept, id: tournament_id, player_id: player_id, accepted: true
+    assert_response :success
+    registration = Registration.where(tournament_id: tournament_id, player_id: player_id).first
+    assert registration.accepted
+    post :accept, id: tournament_id, player_id: player_id, accepted: false
+    assert_response :success
+    registration = Registration.where(tournament_id: tournament_id, player_id: player_id).first
+    refute registration.accepted
   end
 end

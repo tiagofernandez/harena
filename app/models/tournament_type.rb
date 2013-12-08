@@ -6,10 +6,8 @@ class TournamentType
 
   def self.all
     {
-      :SRR => 'Single round-robin',
-      :DRR => 'Double round-robin',
-      # :SEL => 'Single-elimination',
-      # :DEL => 'Double-elimination'
+      :SRR => 'Round-robin',
+      # :SKO => 'Knockout',
     }
   end
 
