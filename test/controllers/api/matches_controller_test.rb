@@ -29,7 +29,7 @@ class API::MatchesControllerTest < ActionController::TestCase
       'player2_team' => 'DW',
     }
     assert_response :success
-    sign_in players(:random4)
+    force_sign_in players(:random4)
     post :update, id: match_id, match: {
       'winner_id' => 4,
       'victory'   => 'CK',

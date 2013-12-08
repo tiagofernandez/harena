@@ -108,7 +108,18 @@ class API::TournamentsControllerTest < ActionController::TestCase
     assert json_response['started']
     created_matches = Match.where(tournament_id: tournament_id)
     assert_equal 15, created_matches.count
-    created_matches.each do |m| assert m.pool.include?(':') end
+    scheduled = {}
+    created_matches.each do |m|
+      pool = m.pool
+      assert pool.include?(':')
+      round = pool[0...pool.index(':')]
+      scheduled[round] = [] if !scheduled.include?(round)
+      refute scheduled[round].include?(m.player1.id)
+      refute scheduled[round].include?(m.player2.id)
+      scheduled[round] << m.player1.id << m.player2.id
+    end
+    played = created_matches.map { |m| [m.player1.id, m.player2.id] }.flatten
+    1.upto(6) { |player_id| assert_equal 5, played.count(player_id) }
   end
 
   test "should allow updating a tournament" do
