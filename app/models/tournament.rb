@@ -16,6 +16,10 @@ class Tournament < ActiveRecord::Base
     host.id == player.id
   end
 
+  def registered?(player)
+    Registration.where(tournament_id: id, player: player).count == 1
+  end
+
   def get_accepted_players
     players = Player.joins(:tournaments).where(
       "tournament_id = :tournament_id AND accepted = :accepted",
