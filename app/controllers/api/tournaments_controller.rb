@@ -27,11 +27,17 @@ class API::TournamentsController < ApplicationController
   def show
     tournament = get_tournament
     if tournament
-      begin
-        render :json => API::TournamentStrategy.resolve_ranking(tournament)
-      rescue NotImplementedError => err
-        render :status => :not_implemented, :text => err.message
+      result = { :tournament => tournament }
+      if tournament.started
+        begin
+          result[:ranking] = API::TournamentStrategy.resolve_ranking(tournament)
+        rescue NotImplementedError => err
+          render :status => :not_implemented, :text => err.message
+        end
+      else
+        result[:registered] = Registration.where(tournament: tournament)
       end
+      render :json => result
     else
       render :status => :not_found, :text => "Tournament not found."
     end

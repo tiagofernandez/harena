@@ -35,9 +35,15 @@ class API::TournamentsControllerTest < ActionController::TestCase
     assert_equal 1, Tournament.find(tournament_id).host.id
   end
 
+  test "should get the registered players of an unstarted tournament" do
+    get :show, id: 7
+    registered = json_response['registered']
+    assert_equal 6, registered.select { |r| r['accepted'] }.size
+  end
+
   test "should get the current ranking for a round-robin tournament" do
     get :show, id: 1
-    ranking = json_response
+    ranking = json_response['ranking']
     assert_equal 2.0803, ranking[0]['score']
     assert_equal 2.0438, ranking[1]['score']
     assert_equal 1.0175, ranking[2]['score']
@@ -99,6 +105,10 @@ class API::TournamentsControllerTest < ActionController::TestCase
     end
     post :start, id: 3
     assert_response :not_implemented
+  end
+
+  test "should require both tournament and player for creating a registration" do
+    refute Registration.new.valid?
   end
 
   test "should start a tournament with the minimum number of participants" do
