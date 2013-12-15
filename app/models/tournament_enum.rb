@@ -1,7 +1,6 @@
 require 'concerns/enumerable'
 
-class TournamentType
-
+class TournamentEnum
   include Enumerable
 
   def self.all
@@ -10,5 +9,4 @@ class TournamentType
       # :SKO => 'Knockout',
     }
   end
-
 end

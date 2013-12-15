@@ -30,7 +30,11 @@
   %div
     = f.label :avatar
     %br
-    = f.select :avatar, options_for_select(AvatarType.options(image_picker={:path => '/avatars'}), resource.avatar)
+    = f.select :avatar, options_for_select(AvatarEnum.options(image_picker={:path => '/avatars'}), resource.avatar)
+  %div
+    = f.label :timezone
+    %br
+    = f.select :timezone, options_for_select(TimezoneEnum.options, resource.timezone)
   %div= f.submit "Update"
 / %h3 Cancel account
 / %p

@@ -1,7 +1,6 @@
 require 'concerns/enumerable'
 
-class AvatarType
-
+class AvatarEnum
   include Enumerable
 
   def self.all
@@ -125,6 +124,5 @@ class AvatarType
       215 => 'Wraith_v2.jpg'
     }
   end
-
 end
 

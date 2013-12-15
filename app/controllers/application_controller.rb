@@ -9,7 +9,8 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up)        << [:username, :avatar]
-    devise_parameter_sanitizer.for(:account_update) << [:username, :avatar]
+    extra_fields = [:username, :avatar, :timezone]
+    devise_parameter_sanitizer.for(:sign_up)        << extra_fields
+    devise_parameter_sanitizer.for(:account_update) << extra_fields
   end
 end

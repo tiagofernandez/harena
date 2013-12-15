@@ -1,7 +1,6 @@
 require 'concerns/enumerable'
 
-class EmblemType
-
+class EmblemEnum
   include Enumerable
 
   def self.all
@@ -14,6 +13,5 @@ class EmblemType
       5 => 'SH-Emblem-hd.png'
     }
   end
-
 end
 
