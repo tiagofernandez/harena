@@ -5,6 +5,7 @@ class PlayerTest < ActiveSupport::TestCase
   def new_player(attributes={})
     attributes[:username]              ||= 'tester'
     attributes[:avatar]                ||= 106
+    attributes[:timezone]              ||= 'GMT+01:00 Paris'
     attributes[:email]                 ||= 'tester@acme.com'
     attributes[:password]              ||= '0123456789'
     attributes[:password_confirmation] ||= '0123456789'
@@ -17,6 +18,11 @@ class PlayerTest < ActiveSupport::TestCase
     assert new_player.valid?
   end
 
+  test "should require an username" do
+    player = new_player(:username => '')
+    assert_equal ["can't be blank", "is too short (minimum is 3 characters)", "should only contain letters and numbers"], player.errors[:username]
+  end
+
   test "should require unique username" do
     username = 'foobar'
     assert new_player(:username => username).save!
@@ -24,11 +30,6 @@ class PlayerTest < ActiveSupport::TestCase
       player = new_player(:username => u)
       assert_equal ["has already been taken"], player.errors[:username]
     end
-  end
-
-  test "should require username" do
-    player = new_player(:username => '')
-    assert_equal ["can't be blank", "should only contain letters and numbers"], player.errors[:username]
   end
 
   test "should require only letters and numbers in username" do
@@ -73,4 +74,14 @@ class PlayerTest < ActiveSupport::TestCase
     assert_equal ["is too short (minimum is 4 characters)"], player.errors[:password]
   end
 
+  test "should validate timezone format" do
+    TimezoneEnum.all(as_list=true).each do |t|
+      player = new_player(:timezone => t)
+      assert player.errors.empty?, "failed to validate #{t}"
+    end
+    ['', 'GMT 01:00 Paris', 'GMT+0100 Paris', '+0100 Paris', 'gmt+01:00 Paris'].each do |t|
+      player = new_player(:timezone => t)
+      assert player.errors[:timezone], "failed to validate #{t}"
+    end
+  end
 end
