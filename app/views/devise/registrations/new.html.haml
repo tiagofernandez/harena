@@ -20,6 +20,6 @@
   %div
     = f.label :avatar
     %br
-    = f.select :avatar, options_for_select(AvatarType.options(image_picker={:path => '/avatars'}))
+    = f.select :avatar, options_for_select(AvatarEnum.options(image_picker={:path => '/avatars'}))
   %div= f.submit "Sign up"
 = render "devise/shared/links"

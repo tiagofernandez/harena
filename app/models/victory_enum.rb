@@ -1,6 +1,6 @@
 require 'concerns/enumerable'
 
-class VictoryType
+class VictoryEnum
 
   include Enumerable
 

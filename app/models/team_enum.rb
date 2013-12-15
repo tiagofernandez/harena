@@ -1,6 +1,6 @@
 require 'concerns/enumerable'
 
-class TeamType
+class TeamEnum
 
   include Enumerable
 

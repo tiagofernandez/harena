@@ -1,6 +1,6 @@
 require 'concerns/enumerable'
 
-class EmblemType
+class EmblemEnum
 
   include Enumerable
 

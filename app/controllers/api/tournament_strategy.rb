@@ -4,7 +4,7 @@ class API::TournamentStrategy
     if tournament.round_robin?
       RoundRobinStrategy.new(tournament).generate_matches
     else
-      raise NotImplementedError, "Cannot generate matches for tournament type: #{tournament.kind}."
+      raise NotImplementedError, "Cannot generate matches for tournament: #{tournament.kind}."
     end
   end
 
@@ -12,7 +12,7 @@ class API::TournamentStrategy
     if tournament.round_robin?
       RoundRobinStrategy.new(tournament).resolve_ranking
     else
-      raise NotImplementedError, "Cannot resolve ranking for tournament type: #{tournament.kind}."
+      raise NotImplementedError, "Cannot resolve ranking for tournament: #{tournament.kind}."
     end
   end
 end

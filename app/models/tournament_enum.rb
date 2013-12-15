@@ -1,6 +1,6 @@
 require 'concerns/enumerable'
 
-class TournamentType
+class TournamentEnum
 
   include Enumerable
 

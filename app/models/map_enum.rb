@@ -1,6 +1,6 @@
 require 'concerns/enumerable'
 
-class MapType
+class MapEnum
 
   include Enumerable
 

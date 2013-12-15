@@ -1,6 +1,6 @@
 require 'concerns/enumerable'
 
-class AvatarType
+class AvatarEnum
 
   include Enumerable
 
