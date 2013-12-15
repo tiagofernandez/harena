@@ -20,8 +20,10 @@ class PlayerTest < ActiveSupport::TestCase
   test "should require unique username" do
     username = 'foobar'
     assert new_player(:username => username).save!
-    player = new_player(:username => username)
-    assert_equal ["has already been taken"], player.errors[:username]
+    [username, username.upcase].each do |u|
+      player = new_player(:username => u)
+      assert_equal ["has already been taken"], player.errors[:username]
+    end
   end
 
   test "should require username" do
