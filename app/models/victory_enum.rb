@@ -1,7 +1,6 @@
 require 'concerns/enumerable'
 
 class VictoryEnum
-
   include Enumerable
 
   def self.all
@@ -12,5 +11,4 @@ class VictoryEnum
       :F   => 'Forfeit'
     }
   end
-
 end

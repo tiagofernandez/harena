@@ -1,7 +1,6 @@
 require 'concerns/enumerable'
 
 class TeamEnum
-
   include Enumerable
 
   def self.all
@@ -14,5 +13,4 @@ class TeamEnum
       :SL => 'Shaolin'
     }
   end
-
 end

@@ -1,7 +1,6 @@
 require 'concerns/enumerable'
 
 class MapEnum
-
   include Enumerable
 
   def self.all
@@ -15,5 +14,4 @@ class MapEnum
       6 => 'GameBoard_Shaolin-hd'
     }
   end
-
 end
