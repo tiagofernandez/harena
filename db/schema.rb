@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20131211213128) do
     t.datetime "updated_at"
     t.integer  "tournament_id"
     t.integer  "round"
-    t.string   "pool"
+    t.string   "game"
   end
 
   add_index "matches", ["player1_id"], name: "index_matches_on_player1_id"

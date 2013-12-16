@@ -11,7 +11,7 @@ class API::MatchesControllerTest < ActionController::TestCase
     assert_response :success
     match = json_response
     assert_equal 1, match['tournament_id']
-    assert_equal '1:A', match['pool']
+    assert_equal '1:A', match['game']
     assert_equal 1, match['player1_id']
     assert_equal 2, match['player2_id']
     assert_equal 1, match['winner_id']

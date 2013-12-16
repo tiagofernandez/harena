@@ -47,10 +47,10 @@ class RoundRobinStrategy < API::TournamentStrategy
     end
     rounds.each_with_index do |round, round_idx|
       round.each_with_index do |match, match_idx|
-        pool = "#{round_idx + 1}:#{@@number_letter_map[match_idx + 1]}"
+        game = "#{round_idx + 1}:#{@@number_letter_map[match_idx + 1]}"
         match = Match.new({
           :tournament_id => @tournament.id,
-          :pool          => pool,
+          :game          => game,
           :player1_id    => match[0].id,
           :player2_id    => match[1].id
         })
@@ -97,21 +97,21 @@ class RoundRobinStrategy < API::TournamentStrategy
   private
 
   # Not used, kept only for further reference (besides the algorithm is cool!)
-  def _generate_pools(no_matches)
-    pools, section = {}, 0
+  def _generate_games(no_matches)
+    games, section = {}, 0
     no_letters = @@number_letter_map.size
     no_matches.times do |idx|
       number = idx + 1
       if number <= no_letters
-        pools[idx] = @@number_letter_map[number]
+        games[idx] = @@number_letter_map[number]
       else
         remainder = number % no_letters
         section += 1 if remainder == 1
         sub_section = (remainder != 0) ? remainder : no_letters
-        pools[idx] = "#{@@number_letter_map[section]}#{@@number_letter_map[sub_section]}"
+        games[idx] = "#{@@number_letter_map[section]}#{@@number_letter_map[sub_section]}"
       end
     end
-    pools
+    games
   end
 
   # Not used, kept only for further reference (besides the math is cool!)
