@@ -1,0 +1,14 @@
+.header
+  ul.nav.nav-pills.pull-right
+    - if player_signed_in?
+      li
+        = link_to "Log out", destroy_player_session_path, method: :delete
+    - else
+      li(class=active_if_current(root_path))
+        = link_to "Home", root_path
+      li(class=active_if_current(new_player_registration_path))
+        = link_to "Sign up", new_player_registration_path
+      li(class=active_if_current(new_player_session_path))
+        = link_to "Sign in", new_player_session_path
+  h3.text-muted
+    = link_to "Harena", root_path
