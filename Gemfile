@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.0.0'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
 
@@ -44,9 +46,8 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-# Use Haml for HTML
-gem 'haml'
-gem 'html2haml'
+# Use Slim for HTML
+gem 'slim'
 
 # Use Devise for authentication
 gem 'devise'
