@@ -14,8 +14,7 @@
 //= require jquery_ujs
 //= require bootstrap/dist/js/bootstrap
 //= require angular/angular
-//= require angular-resource/angular-resource
-//= require harena
+//= require angular-bootstrap/ui-bootstrap-tpls
 //= require image-picker
 //= require turbolinks
 //= require_tree .

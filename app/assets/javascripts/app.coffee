@@ -1,4 +1,4 @@
-app = angular.module('harena', ['ngResource'])
+app = angular.module('harena', ['ui.bootstrap'])
 
 # Add CSRF token to API requests
 app.config ($httpProvider) ->
