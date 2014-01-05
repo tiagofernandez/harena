@@ -17,7 +17,12 @@ html
       | <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 
   body ng-app="harena"
+    = render "layouts/navigation"
     .container
-      = render "layouts/navigation"
       = render "layouts/flash"
       = yield
+      hr.featurette-divider
+      footer
+        p
+          | by 
+          a href="#" Warloktus
