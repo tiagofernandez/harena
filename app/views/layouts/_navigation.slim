@@ -13,6 +13,8 @@
           a href="http://www.robotentertainmentfans.com/fans/groups/hero-academy-league/" target="_blank" League
       ul.nav.navbar-nav.navbar-right
         - if player_signed_in?
+          li class=active_if_current(edit_player_registration_path)
+            = link_to "Profile", edit_player_registration_path
           li
             = link_to "Sign out", destroy_player_session_path, method: :delete
         - else
