@@ -6,6 +6,10 @@ class AvatarEnum
   def self.all
     {
       0   => 'UnknownAvatar.jpg',
+      1   => 'TauntIcon-SmlPack.jpg',
+      2   => 'TauntIcon-MedPack.jpg',
+      3   => 'TauntIcon-LrgPack.jpg',
+      4   => 'IconColorScreen.jpg',
       100 => 'Annihilator_v1.jpg',
       101 => 'Annihilator_v5.jpg',
       102 => 'Archer_v1.jpg',
