@@ -15,5 +15,8 @@
 /log/*.log
 /tmp
 
+# Ignore Bower downloads
+vendor/assets/components
+
 # Ignore text editors and IDEs
 *.sublime*

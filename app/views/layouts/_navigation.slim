@@ -1,0 +1,24 @@
+.navbar.navbar-default.navbar-fixed-top role="navigation"
+  .container
+    .navbar-header
+      button.navbar-toggle data-target=".navbar-collapse" data-toggle="collapse" type="button"
+        span.sr-only Toggle navigation
+        span.icon-bar
+      = link_to "Hero Academy Arena", root_path, :class => 'navbar-brand'
+    .navbar-collapse.collapse
+      ul.nav.navbar-nav
+        li
+          a href="http://forums.robotentertainment.com/forumdisplay.php?121-Hero-Academy-General-Discussion" target="_blank" Forum
+        li
+          a href="http://www.robotentertainmentfans.com/fans/groups/hero-academy-league/" target="_blank" League
+      ul.nav.navbar-nav.navbar-right
+        - if player_signed_in?
+          li class=active_if_current(edit_player_registration_path)
+            = link_to "Profile", edit_player_registration_path
+          li
+            = link_to "Sign out", destroy_player_session_path, method: :delete
+        - else
+          li class=active_if_current(new_player_registration_path)
+            = link_to "Sign up", new_player_registration_path
+          li class=active_if_current(new_player_session_path)
+            = link_to "Sign in", new_player_session_path

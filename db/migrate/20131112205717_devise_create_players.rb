@@ -6,10 +6,10 @@ class DeviseCreatePlayers < ActiveRecord::Migration
       t.string :encrypted_password, :null => false, :default => ""
 
       ## Recoverable
-      t.string   :reset_password_token
-      t.datetime :reset_password_sent_at
+      # t.string   :reset_password_token
+      # t.datetime :reset_password_sent_at
 
-      ## Rememberable
+      # Rememberable
       t.datetime :remember_created_at
 
       ## Trackable
@@ -34,7 +34,7 @@ class DeviseCreatePlayers < ActiveRecord::Migration
     end
 
     add_index :players, :email,                :unique => true
-    add_index :players, :reset_password_token, :unique => true
+    # add_index :players, :reset_password_token, :unique => true
     # add_index :players, :confirmation_token,   :unique => true
     # add_index :players, :unlock_token,         :unique => true
   end

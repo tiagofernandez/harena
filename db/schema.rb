@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20131211213128) do
     t.datetime "updated_at"
     t.integer  "tournament_id"
     t.integer  "round"
-    t.string   "pool"
+    t.string   "game"
   end
 
   add_index "matches", ["player1_id"], name: "index_matches_on_player1_id"
@@ -33,25 +33,22 @@ ActiveRecord::Schema.define(version: 20131211213128) do
   add_index "matches", ["winner_id"], name: "index_matches_on_winner_id"
 
   create_table "players", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
+    t.string   "email",               default: "", null: false
+    t.string   "encrypted_password",  default: "", null: false
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",       default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "username",               default: "", null: false
-    t.integer  "avatar",                 default: 0,  null: false
+    t.string   "username",            default: "", null: false
+    t.integer  "avatar",              default: 0,  null: false
     t.string   "timezone"
   end
 
   add_index "players", ["email"], name: "index_players_on_email", unique: true
-  add_index "players", ["reset_password_token"], name: "index_players_on_reset_password_token", unique: true
   add_index "players", ["username"], name: "index_players_on_username", unique: true
 
   create_table "registrations", force: true do |t|

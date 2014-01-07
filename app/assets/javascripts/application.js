@@ -12,6 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//= require bootstrap/dist/js/bootstrap
+//= require angular/angular
+//= require angular-bootstrap/ui-bootstrap-tpls
 //= require image-picker
+//= require turbolinks
 //= require_tree .
