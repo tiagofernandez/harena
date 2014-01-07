@@ -19,10 +19,19 @@ html
   body ng-app="harena"
     = render "layouts/navigation"
     .container
-      = render "layouts/flash"
-      = yield
+      .content
+        = render "layouts/flash"
+        = yield
       hr.featurette-divider
       footer
-        p
-          | by 
-          a href="#" Warloktus
+        .row
+          .col-lg-6
+            p
+              | Brought to you by 
+              a href="#" Warloktus
+              | .
+          .col-lg-6
+            p.text-right
+              | Consider 
+              a href="#" buying me a beer
+              |  once in a while.
