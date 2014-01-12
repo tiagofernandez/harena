@@ -54,9 +54,9 @@ Harena::Application.routes.draw do
   #     resources :products
   #   end
 
-  devise_for :players
+  devise_for :players, :controllers => { :registrations => "registrations" }
 
-  namespace :api, :defaults => {:format => :json} do
+  namespace :api, :defaults => { :format => :json } do
 
     resources :tournaments, except: [:new, :edit]
     post  '/tournaments/:id/start',    to: 'tournaments#start'
