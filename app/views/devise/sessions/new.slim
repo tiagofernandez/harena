@@ -1,16 +1,22 @@
-h2 Sign in
-
-= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-  = devise_error_messages!
-  div
-    = f.email_field :email, :autofocus => true, :placeholder => "Email address", :class => "form-control"
-  div
-    = f.password_field :password, :placeholder => "Password", :class => "form-control"
-  - if devise_mapping.rememberable?
-    div
-      = f.check_box :remember_me
-      = f.label :remember_me
-  div
-    = f.submit "Sign in", :class => "btn btn-lg btn-primary btn-block"
-
-= render "devise/shared/links"
+.container
+  .row
+    .col-lg-12
+      h2 Sign in
+  .row
+    .col-lg-12
+      = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+        = devise_error_messages!
+        .row
+          .col-lg-4
+            .form-group
+              = f.label :email
+              = f.email_field :email, :autofocus => true, :placeholder => "Email address", :class => "form-control"
+        .row
+          .col-lg-4
+            .form-group
+              = f.label :password
+              = f.password_field :password, :placeholder => "Password", :class => "form-control"
+        .row
+          .col-lg-4
+            .form-group
+              = f.submit "Login", :class => "btn btn-lg btn-success"
