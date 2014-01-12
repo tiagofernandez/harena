@@ -1,28 +1,31 @@
-- if !player_signed_in?
-  .jumbotron
-    .row
-      .col-lg-2
-        = image_tag "emblems/Hum-Emblem-hd.png", :class => 'emblem large'
-      .col-lg-2
-        = image_tag "emblems/DE-Emblem-hd.png", :class => 'emblem large'
-      .col-lg-2
-        = image_tag "emblems/DW-Emblem-hd.png", :class => 'emblem large'
-      .col-lg-2
-        = image_tag "emblems/OR-Emblem-hd.png", :class => 'emblem large'
-      .col-lg-2
-        = image_tag "emblems/TF2a-Emblem-hd.png", :class => 'emblem large'
-      .col-lg-2
-        = image_tag "emblems/SH-Emblem-hd.png", :class => 'emblem large'
-  .row
-    .col-lg-4
-      h2 Join tournaments
-      p.lead Participate in challenging tournaments, organized by the enthusiastic Hero Academy community!
-    .col-lg-4
-      h2 Track matches
-      p.lead Report who won, and how! You can also post results to the league if both players agree to.
-    .col-lg-4
-      h2 Become a champion
-      p.lead Fight your way to the top by facing seasoned players! Stop wasting time with random games.
+- if player_signed_in?
+  .container
 
 - else
-  p
+  .jumbotron
+    .container
+      .row
+        .col-lg-2
+          = image_tag "emblems/Hum-Emblem-hd.png", :class => 'emblem large'
+        .col-lg-2
+          = image_tag "emblems/DE-Emblem-hd.png", :class => 'emblem large'
+        .col-lg-2
+          = image_tag "emblems/DW-Emblem-hd.png", :class => 'emblem large'
+        .col-lg-2
+          = image_tag "emblems/OR-Emblem-hd.png", :class => 'emblem large'
+        .col-lg-2
+          = image_tag "emblems/TF2a-Emblem-hd.png", :class => 'emblem large'
+        .col-lg-2
+          = image_tag "emblems/SH-Emblem-hd.png", :class => 'emblem large'
+
+  .container
+    .row
+      .col-lg-4
+        h2 Join tournaments
+        p.lead Participate in challenging tournaments, organized by the enthusiastic Hero Academy community!
+      .col-lg-4
+        h2 Track matches
+        p.lead Report who won, and how! You can also post results to the league if both players agree to.
+      .col-lg-4
+        h2 Become a champion
+        p.lead Fight your way to the top by facing seasoned players! Stop wasting time with random games.

@@ -18,12 +18,12 @@ html
 
   body ng-app="harena"
     = render "layouts/navigation"
-    .container
-      .content
-        = render "layouts/flash"
-        = yield
-      hr.featurette-divider
-      footer
+    .content
+      = render "layouts/flash"
+      = yield
+    footer
+      .container
+        hr.featurette-divider
         .row
           .col-lg-6
             p
@@ -34,4 +34,4 @@ html
             p.text-right
               | Consider 
               a href="#" buying me a beer
-              |  once in a while.
+              |  if you like it.
