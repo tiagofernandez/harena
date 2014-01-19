@@ -3,7 +3,7 @@ require 'test_helper'
 class AvatarEnumTest < ActiveSupport::TestCase
 
   test "should list all avatars" do
-    assert_equal 117, AvatarEnum.all.size
+    assert_equal 121, AvatarEnum.all.size
   end
 
   test "should check if an avatar exists" do
