@@ -32,6 +32,16 @@ class PlayerTest < ActiveSupport::TestCase
     end
   end
 
+  test "should require username with more than 3 characters" do
+    player = new_player(:username => 'ab')
+    assert_equal ["is too short (minimum is 3 characters)"], player.errors[:username]
+  end
+
+  test "should require username with less than 20 characters" do
+    player = new_player(:username => 'a' * 21)
+    assert_equal ["is too long (maximum is 20 characters)"], player.errors[:username]
+  end
+
   test "should require only letters and numbers in username" do
     player = new_player(:username => 't&$t&r')
     assert_equal ["should only contain letters and numbers"], player.errors[:username]
