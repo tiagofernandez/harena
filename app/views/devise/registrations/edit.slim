@@ -9,13 +9,14 @@
         .row
           .col-lg-12
             .form-group
-              = f.label :avatar
               = f.select :avatar, options_for_select(AvatarEnum.options(image_picker={:path => '/avatars'}), resource.avatar), { :autofocus => true }
         .row
-          .col-lg-4
+          .col-lg-3
             .form-group
-              = f.label :timezone
-              = f.select :timezone, options_for_select(TimezoneEnum.options, resource.timezone), { :include_blank => '' }, { :class => 'form-control' }
+              = f.select :timezone, options_for_select(TimezoneEnum.options, resource.timezone), {}, { :class => 'form-control' }
+          .col-lg-3
+            .error-message
+              | {{ errors.timezone }}
         .row
           .col-lg-4
             .form-group

@@ -1,22 +1,23 @@
 .container
   .row
     .col-lg-12
-      h2 Sign in
+      h2 Existing account
   .row
     .col-lg-12
-      = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+      = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :ng_controller => "SignInController" }) do |f|
         = devise_error_messages!
         .row
-          .col-lg-4
+          .col-lg-3
             .form-group
-              = f.label :email
-              = f.email_field :email, :autofocus => true, :placeholder => "Email address", :class => "form-control"
+              = f.email_field :email, :placeholder => 'E-mail', :class => 'form-control', :ng_model => 'email', :ng_change => 'validateEmail()', :ng_blur => 'validateEmail()'
+          .col-lg-3
+            .error-message
+              | {{ errors.email }}
         .row
-          .col-lg-4
+          .col-lg-3
             .form-group
-              = f.label :password
               = f.password_field :password, :placeholder => "Password", :class => "form-control"
         .row
-          .col-lg-4
+          .col-lg-3
             .form-group
-              = f.submit "Login", :class => "btn btn-lg btn-success"
+              = f.submit "Sign in", :class => "btn btn-lg btn-success"
