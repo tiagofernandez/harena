@@ -1,10 +1,13 @@
 angular.module('Harena').factory 'Validator', () ->
   class Validator
 
+    unless String::trim then String::trim = -> @replace /^\s+|\s+$/g, ""
+
     constructor: ->
       @patterns =
         email    : /^([\w.-]+)@([\w.-]+)\.([a-zA-Z.]{2,6})$/i
         timezone : /^GMT[+-][01]\d:[0-5][05]\s.{3,}$/
+        title    : /^[\w\s]+$/i
         username : /^[a-zA-Z0-9]+$/i
 
     checkUsername: (username) ->
@@ -49,5 +52,18 @@ angular.module('Harena').factory 'Validator', () ->
           'Set your timezone'
         when not timezone.match @patterns.timezone
           'Invalid timezone'
+        else
+          ''
+
+    checkTitle: (title) ->
+      switch
+        when not title
+          'Enter the title'
+        when title.length < 10
+          'Enter at least 10 characters'
+        when title.length > 40
+          'Enter at most 40 characters'
+        when not title.match @patterns.title
+          'Use only alphanumeric characters'
         else
           ''

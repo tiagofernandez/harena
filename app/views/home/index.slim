@@ -1,5 +1,36 @@
 - if player_signed_in?
-  .container
+  .main-body
+    .container
+      .row
+        .col-lg-12
+          tabset
+            tab
+              tab-heading
+                i.glyphicon.glyphicon-home
+                span.tab-title Home
+              .tab-body
+                | Tournaments! Tournaments for everybody!
+            tab
+              tab-heading
+                i.glyphicon.glyphicon-tower
+                span.tab-title New Tournament
+              .tab-body
+                form ng-controller="NewTournamentController"
+                  .container
+                    .row
+                      .col-lg-4
+                        .form-group
+                          input.form-control type="text" placeholder="Title" ng-model="title" ng-change="validateTitle()" ng-blur="validateTitle()"
+                      .col-lg-3
+                        .error-message
+                          | {{ errors.title }}
+                    .row
+                      .col-lg-8
+                        .form-group
+                          textarea.form-control rows="10" maxlength="1024" placeholder="TL;DR rules" ng-model="rules"
+                    .row
+                      .col-lg-4
+                        button.btn.btn-primary Create
 
 - else
   .jumbotron

@@ -4,7 +4,7 @@ class CreateTournaments < ActiveRecord::Migration
       t.references :host
       t.references :champion
       t.references :runner_up
-      t.string     :title
+      t.string     :title,     :limit => 40
       t.string     :kind
       t.string     :rules,     :limit => 1024
       t.boolean    :started,   :null => false, :default => false
