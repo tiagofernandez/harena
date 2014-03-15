@@ -8,7 +8,7 @@ class Player < ActiveRecord::Base
             presence: true,
             length: { in: 3..20 },
             uniqueness: { case_sensitive: false },
-            format: { with: /\A[a-zA-Z0-9]+\z/i, message: "should only contain letters and numbers" }
+            format: { with: /\A[a-zA-Z0-9\_]+\z/i, message: "should only contain letters, numbers, and underscores" }
 
   validates :timezone,
             presence: true,

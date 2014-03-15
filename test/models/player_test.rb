@@ -20,11 +20,11 @@ class PlayerTest < ActiveSupport::TestCase
 
   test "should require an username" do
     player = new_player(:username => '')
-    assert_equal ["can't be blank", "is too short (minimum is 3 characters)", "should only contain letters and numbers"], player.errors[:username]
+    assert_equal ["can't be blank", "is too short (minimum is 3 characters)", "should only contain letters, numbers, and underscores"], player.errors[:username]
   end
 
   test "should require unique username" do
-    username = 'foobar'
+    username = 'foo_bar'
     assert new_player(:username => username).save!
     [username, username.upcase].each do |u|
       player = new_player(:username => u)
@@ -44,12 +44,12 @@ class PlayerTest < ActiveSupport::TestCase
 
   test "should require only letters and numbers in username" do
     player = new_player(:username => 't&$t&r')
-    assert_equal ["should only contain letters and numbers"], player.errors[:username]
+    assert_equal ["should only contain letters, numbers, and underscores"], player.errors[:username]
   end
 
   test "should reject spaces in username" do
     player = new_player(:username => 't e s t e r')
-    assert_equal ["should only contain letters and numbers"], player.errors[:username]
+    assert_equal ["should only contain letters, numbers, and underscores"], player.errors[:username]
   end
 
   test "should require email" do
