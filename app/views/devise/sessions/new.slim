@@ -4,20 +4,27 @@
       h2 Existing account
   .row
     .col-lg-12
-      = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :ng_controller => "SignInController" }) do |f|
-        = devise_error_messages!
+      = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :name => 'signinForm', :novalidate => 'true' }) do |f|
+        .row
+          .col-lg-12
+            p
+              / Login action in Devise sets flash messages, not model errors
+              / = content_tag(:div, flash[:error], :id => 'flash_error', :class => 'error-message') if flash[:error]
+              / = content_tag(:div, flash[:notice], :id => 'flash_notice', :class => 'error-message') if flash[:notice]
+              = content_tag(:div, flash[:alert], :id => 'flash_alert', :class => 'error-message') if flash[:alert]
         .row
           .col-lg-3
             .form-group
-              = f.email_field :email, :placeholder => 'E-mail', :class => 'form-control', :ng_model => 'email', :ng_change => 'validateEmail()', :ng_blur => 'validateEmail()'
-          .col-lg-3
-            .error-message
-              | {{ errors.email }}
+              label E-mail
+              = f.email_field :email, :placeholder => 'Enter your email', :class => 'form-control', :ng_model => 'email'
+              .error-message ng-show='signinForm["player[email]"].$invalid'
+                | Enter a valid e-mail.
         .row
           .col-lg-3
             .form-group
-              = f.password_field :password, :placeholder => "Password", :class => "form-control"
+              label Password
+              = f.password_field :password, :placeholder => 'Enter your password', :class => 'form-control'
         .row
           .col-lg-3
             .form-group
-              = f.submit "Sign in", :class => "btn btn-lg btn-success"
+              = f.submit 'Sign in', :class => 'btn btn-success'

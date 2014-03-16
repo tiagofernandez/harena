@@ -15,19 +15,24 @@
                 i.glyphicon.glyphicon-tower
                 span.tab-title New Tournament
               .tab-body
-                form ng-controller="NewTournamentController"
+                form name='newTournamentForm' ng-controller='NewTournamentController' novalidate='true'
                   .container
                     .row
                       .col-lg-4
                         .form-group
-                          input.form-control type="text" placeholder="Title" ng-model="title" ng-change="validateTitle()" ng-blur="validateTitle()"
-                      .col-lg-3
-                        .error-message
-                          | {{ errors.title }}
+                          label Title
+                          input.form-control type='text' name='title' placeholder='Enter an unique title' ng-model='title' ng-minlength='10' ng-maxlength='40' ng-pattern='/^[\w\s\-\_]+$/i'
+                          .error-message ng-show='newTournamentForm.title.$error.minlength'
+                            | Enter at least 10 characters.
+                          .error-message ng-show='newTournamentForm.title.$error.maxlength'
+                            | Enter at most 40 characters.
+                          .error-message ng-show='newTournamentForm.title.$error.pattern'
+                            | Use only letters, numbers, dashes, and underscores.
                     .row
                       .col-lg-8
                         .form-group
-                          textarea.form-control rows="10" maxlength="1024" placeholder="TL;DR rules" ng-model="rules"
+                          label Rules
+                          textarea.form-control rows='10' maxlength='1024' placeholder='Define the rules participants must follow.' ng-model='rules'
                     .row
                       .col-lg-4
                         button.btn.btn-primary Create
@@ -37,17 +42,17 @@
     .container
       .row
         .col-lg-2
-          = image_tag "emblems/Hum-Emblem-hd.png", :class => 'emblem large'
+          = image_tag 'emblems/Hum-Emblem-hd.png', :class => 'emblem large'
         .col-lg-2
-          = image_tag "emblems/DE-Emblem-hd.png", :class => 'emblem large'
+          = image_tag 'emblems/DE-Emblem-hd.png', :class => 'emblem large'
         .col-lg-2
-          = image_tag "emblems/DW-Emblem-hd.png", :class => 'emblem large'
+          = image_tag 'emblems/DW-Emblem-hd.png', :class => 'emblem large'
         .col-lg-2
-          = image_tag "emblems/OR-Emblem-hd.png", :class => 'emblem large'
+          = image_tag 'emblems/OR-Emblem-hd.png', :class => 'emblem large'
         .col-lg-2
-          = image_tag "emblems/TF2a-Emblem-hd.png", :class => 'emblem large'
+          = image_tag 'emblems/TF2a-Emblem-hd.png', :class => 'emblem large'
         .col-lg-2
-          = image_tag "emblems/SH-Emblem-hd.png", :class => 'emblem large'
+          = image_tag 'emblems/SH-Emblem-hd.png', :class => 'emblem large'
 
   .container
     .row

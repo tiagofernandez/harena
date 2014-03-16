@@ -4,48 +4,51 @@
       h2 New account
   .row
     .col-lg-12
-      = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {  :ng_controller => "SignUpController" }) do |f|
+      = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {  :name => 'signupForm', :novalidate => 'true' }) do |f|
         = devise_error_messages!
         .row
           .col-lg-12
+            label Avatar
             .form-group
               = f.select :avatar, options_for_select(AvatarEnum.options(image_picker={:path => '/avatars'})), { :autofocus => true }
         .row
-          .col-lg-3
+          .col-lg-4
             .form-group
-              = f.select :timezone, options_for_select(TimezoneEnum.options), { :include_blank => 'Timezone' }, { :class => 'form-control', :ng_model => 'timezone', :ng_change => 'validateTimezone()', :ng_blur => 'validateTimezone()' }
-          .col-lg-3
-            .error-message
-              | {{ errors.timezone }}
+              label Timezone
+              = f.select :timezone, options_for_select(TimezoneEnum.options), { :include_blank => '' }, { :class => 'form-control', :ng_model => 'timezone', :ng_required => 'true' }
+              .error-message ng-show='!signupForm["player[timezone]"].$pristine && signupForm["player[timezone]"].$error.required'
+                | Select your timezone.
         .row
-          .col-lg-3
+          .col-lg-4
             .form-group
-              = f.text_field :username, :placeholder => 'Username', :class => 'form-control', :ng_model => 'username', :ng_change => 'validateUsername()', :ng_blur => 'validateUsername()'
-          .col-lg-3
-            .error-message
-              | {{ errors.username }}
+              label Username
+              = f.text_field :username, :placeholder => 'Enter your Hero Academy username', :class => 'form-control', :ng_model => 'username', :ng_minlength => '3', :ng_maxlength => '20', :ng_pattern => '/^[a-zA-Z0-9\_]+$/i'
+              .error-message ng-show='signupForm["player[username]"].$error.minlength'
+                | Enter at least 3 characters.
+              .error-message ng-show='signupForm["player[username]"].$error.maxlength'
+                | Enter at most 20 characters.
+              .error-message ng-show='signupForm["player[username]"].$error.pattern'
+                | Use only letters, numbers, and underscores.
         .row
-          .col-lg-3
+          .col-lg-4
             .form-group
-              = f.email_field :email, :placeholder => 'E-mail', :class => 'form-control', :ng_model => 'email', :ng_change => 'validateEmail()', :ng_blur => 'validateEmail()'
-          .col-lg-3
-            .error-message
-              | {{ errors.email }}
+              label E-mail
+              = f.email_field :email, :placeholder => 'Enter your email', :class => 'form-control', :ng_model => 'email'
+              .error-message ng-show='signupForm["player[email]"].$invalid'
+                | Enter a valid e-mail.
         .row
-          .col-lg-3
+          .col-lg-4
             .form-group
-              = f.password_field :password, :placeholder => 'Password', :autocomplete => "off", :class => 'form-control', :ng_model => 'password', :ng_change => 'validatePassword()', :ng_blur => 'validatePassword()'
-          .col-lg-3
-            .error-message
-              | {{ errors.password }}
+              label Password
+              = f.password_field :password, :placeholder => 'Enter a password', :autocomplete => 'off', :class => 'form-control', :ng_model => 'password'
         .row
-          .col-lg-3
+          .col-lg-4
             .form-group
-              = f.password_field :password_confirmation, :placeholder => 'Confirm password', :autocomplete => "off", :class => 'form-control', :ng_model => 'passwordConfirmation', :ng_change => 'validatePasswordConfirmation()', :ng_blur => 'validatePasswordConfirmation()'
-          .col-lg-3
-            .error-message
-              | {{ errors.passwordConfirmation }}
+              label Confirmation
+              = f.password_field :password_confirmation, :placeholder => 'Confirm the password', :autocomplete => 'off', :class => 'form-control', :ng_model => 'passwordConfirmation', :password_match => 'password'
+              .error-message ng-show='signupForm["player[password_confirmation]"].$invalid'
+                | Passwords do not match.
         .row
-          .col-lg-3
+          .col-lg-4
             .form-group
-              = f.submit "Sign up", :class => "btn btn-lg btn-success"
+              = f.submit 'Sign up', :class => 'btn btn-success'
