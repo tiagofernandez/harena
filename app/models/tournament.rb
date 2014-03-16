@@ -1,5 +1,12 @@
 class Tournament < ActiveRecord::Base
 
+  validates :title,
+            on: :create,
+            presence: true,
+            length: { in: 10..40 },
+            uniqueness: { case_sensitive: false },
+            format: { with: /\A[\w\s\-]+\z/i, message: "should only contain letters, numbers, dashes, and underscores" }
+
   belongs_to :host,      :class_name => 'Player', :foreign_key => 'host_id'
   belongs_to :champion,  :class_name => 'Player', :foreign_key => 'champion_id'
   belongs_to :runner_up, :class_name => 'Player', :foreign_key => 'runner_up_id'

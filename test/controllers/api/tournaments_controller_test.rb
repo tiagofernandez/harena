@@ -152,7 +152,7 @@ class API::TournamentsControllerTest < ActionController::TestCase
 
   test "should allow deleting a tournament that hasn't started yet" do
     new_tournament = Tournament.new({ :host_id => 1 })
-    new_tournament.save!
+    new_tournament.save! :validate => false
     post :destroy, id: new_tournament.id
     assert_response :success
     assert_equal 0, Tournament.where(id: new_tournament.id).count
