@@ -42,7 +42,7 @@ class PlayerTest < ActiveSupport::TestCase
     assert_equal ["is too long (maximum is 20 characters)"], player.errors[:username]
   end
 
-  test "should require only letters and numbers in username" do
+  test "should require only letters numbers and underscores in username" do
     player = new_player(:username => 't&$t&r')
     assert_equal ["should only contain letters, numbers, and underscores"], player.errors[:username]
   end
