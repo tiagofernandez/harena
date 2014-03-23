@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20131211213128) do
     t.integer  "host_id"
     t.integer  "champion_id"
     t.integer  "runner_up_id"
-    t.string   "title"
+    t.string   "title",        limit: 40
     t.string   "kind"
     t.string   "rules",        limit: 1024
     t.boolean  "started",                   default: false, null: false
