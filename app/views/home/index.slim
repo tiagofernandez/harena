@@ -20,6 +20,12 @@
                     .row
                       .col-lg-4
                         .form-group
+                          label Kind
+                          select.form-control name='kind'
+                            option value='SRR' Round-robin
+                    .row
+                      .col-lg-4
+                        .form-group
                           label Title
                           input.form-control type='text' name='title' placeholder='Enter an unique title' ng-model='title' ng-minlength='10' ng-maxlength='40' ng-pattern='/^[\w\s\-\_]+$/i'
                           .error-message ng-show='newTournamentForm.title.$error.minlength'
@@ -32,7 +38,7 @@
                       .col-lg-8
                         .form-group
                           label Rules
-                          textarea.form-control rows='10' maxlength='1024' placeholder='Define the rules participants must follow.' ng-model='rules'
+                          textarea.form-control rows='10' maxlength='1024' placeholder='Describe the rules that participants must follow.' ng-model='rules'
                     .row
                       .col-lg-4
                         button.btn.btn-primary Create
