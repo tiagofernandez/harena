@@ -4,17 +4,24 @@
       h2 Profile
   .row
     .col-lg-12
-      = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
-        = devise_error_messages!
+      = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {  :name => 'profileForm', :ng_controller => 'PlayersController', :method => :put, :novalidate => 'true' }) do |f|
+        .row
+          .col-lg-12
+            = devise_error_messages!
         .row
           .col-lg-12
             .form-group
-              = f.select :avatar, options_for_select(AvatarEnum.options(image_picker={:path => '/avatars'}), resource.avatar), { :autofocus => true }
+              label Avatar
+              br
+              button.btn.btn-default type='button' ng-click='isAvatarCollapsed = !isAvatarCollapsed' Toggle display
+              div collapse='isAvatarCollapsed'
+                = f.select :avatar, options_for_select(AvatarEnum.options(image_picker={:path => '/avatars'}), resource.avatar), { :autofocus => true }
         .row
           .col-lg-3
             .form-group
+              label Timezone
               = f.select :timezone, options_for_select(TimezoneEnum.options, resource.timezone), {}, { :class => 'form-control' }
         .row
           .col-lg-4
             .form-group
-              = f.submit 'Update', :class => 'btn btn-lg btn-success'
+              = f.submit 'Update', :class => 'btn btn-success'

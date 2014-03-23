@@ -4,13 +4,18 @@
       h2 New account
   .row
     .col-lg-12
-      = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {  :name => 'signupForm', :novalidate => 'true' }) do |f|
-        = devise_error_messages!
+      = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {  :name => 'signupForm', :ng_controller => 'PlayersController', :novalidate => 'true' }) do |f|
         .row
           .col-lg-12
-            label Avatar
+            = devise_error_messages!
+        .row
+          .col-lg-12
             .form-group
-              = f.select :avatar, options_for_select(AvatarEnum.options(image_picker={:path => '/avatars'})), { :autofocus => true }
+              label Avatar
+              br
+              button.btn.btn-default type='button' ng-click='isAvatarCollapsed = !isAvatarCollapsed' Toggle display
+              div collapse='isAvatarCollapsed'
+                = f.select :avatar, options_for_select(AvatarEnum.options(image_picker={:path => '/avatars'})), { :autofocus => true }
         .row
           .col-lg-4
             .form-group
