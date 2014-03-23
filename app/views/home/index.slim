@@ -1,4 +1,4 @@
-- if player_signed_in?
+- if signed_in?
   .main-body
     .container
       .row
@@ -15,7 +15,7 @@
                 i.glyphicon.glyphicon-tower
                 span.tab-title New Tournament
               .tab-body
-                form name='newTournamentForm' ng-controller='NewTournamentController' novalidate='true'
+                form name='newTournamentForm' ng-controller='TournamentsController' novalidate='true'
                   .container
                     .row
                       .col-lg-4

@@ -12,7 +12,7 @@
         li
           a href="http://www.robotentertainmentfans.com/fans/groups/hero-academy-league/" target="_blank" League
       ul.nav.navbar-nav.navbar-right
-        - if player_signed_in?
+        - if signed_in?
           li class=active_if_current(edit_player_registration_path)
             = link_to current_player.username, edit_player_registration_path
           li
